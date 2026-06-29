@@ -1,48 +1,36 @@
 # TRCS102-Daily-Report
-DAY1 Of TRAINING 
-🐍 Day 1: Python Basics – Variables & Data Types
+## DAY1 Of TRAINING 
 
-📖 Overview
+Python Basics – Variables & Data Types
 
-This repository contains the concepts and practice programs covered on Day 1 of Industrial Training for AI & Machine Learning. It introduces Python fundamentals such as variables, data types, memory references, mutability, type casting, and coding exercises.
+The concepts that are covered on Day 1 of Industrial Training for AI & Machine Learning are - Python fundamentals such as variables, data types, memory references, mutability, type casting, and coding exercises.
 
-⸻
+Learning Objectives:- 
 
-🎯 Learning Objectives
+Variables and Python’s memory reference model
+Built-in data types
+Mutable vs Immutable objects
+Type casting (Implicit & Explicit)
+Variable naming conventions (PEP 8)
+Basic Python programming through assignments and exercises
 
-By the end of this session, you will learn:
-
-* Variables and Python’s memory reference model
-* Built-in data types
-* Mutable vs Immutable objects
-* Type casting (Implicit & Explicit)
-* Variable naming conventions (PEP 8)
-* Basic Python programming through assignments and exercises
-
-⸻
-
-📚 Topics Covered
-
-1. Variables
+## 1. Variables
 
 A variable is a reference (name) that points to an object stored in memory.
 
 Example
 
 x = 42
+
 print(x)
 print(type(x))
 print(id(x))
 
-Key Points
+Variables store references, not values.
+type() returns the object’s data type.
+id() returns the memory address.
 
-* Variables store references, not values.
-* type() returns the object’s data type.
-* id() returns the memory address.
-
-⸻
-
-2. Sharing References
+## 2. Sharing References
 
 Assigning one variable to another creates another reference to the same object.
 
@@ -56,9 +44,7 @@ Output
 
 True
 
-⸻
-
-3. Dynamic Typing
+## 3. Dynamic Typing
 
 Python automatically determines the data type.
 
