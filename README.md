@@ -902,16 +902,6 @@ Day 3 covered the fundamentals of **Python Functions**, including creating and c
 
 Great! We’ll do it exactly like Day 1 and Day 2. Here’s Part 1 of the GitHub README.
 
-⸻
-
-TRCS102-Daily-Report
-
-DAY 3 OF TRAINING
-
-Python Functions, Arguments & Return Statement
-
-Day 3 focused on Functions in Python, which help make programs reusable, modular, and easy to maintain. The session covered creating functions, passing arguments, returning values, different types of arguments, and solving practical problems using functions.
-
 ## 1. Functions
 
 A function is a reusable block of code that performs a specific task. Instead of writing the same code repeatedly, we define it once and call it whenever needed.
@@ -1093,9 +1083,9 @@ Python provides different ways of passing arguments to functions.
 
 | Argument Type | Description | Example |
 |----------------|-------------|----------|
-| Positional Arguments | Arguments are assigned based on their order.	intro("Sahil",17,"11th") |
-| Keyword Arguments | Arguments are passed using parameter names, so order doesn’t matter.	intro(name="Sakshi", age=15, course="9th") |
-| Default Arguments | A parameter has a predefined value if no argument is passed.	intro("Priya") |
+| Positional Arguments | Arguments are assigned based on their order. | intro("Sahil",17,"11th") |
+| Keyword Arguments | Arguments are passed using parameter names, so order doesn’t matter. | intro(name="Sakshi", age=15, course="9th") |
+| Default Arguments | A parameter has a predefined value if no argument is passed. | intro("Priya") |
 
 **5.1 Positional Arguments**
 
@@ -1157,7 +1147,7 @@ Name Swastik
 
 Class BTech
 
-**6.2 Example of *args**
+**6.2 Example of *args **
 
     def calculate_total_expenses(*expenses):
     print(f"Expenses received: {expenses}")
