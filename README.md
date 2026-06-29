@@ -1147,7 +1147,7 @@ Name Swastik
 
 Class BTech
 
-**6.2 Example of *args **
+**6.2 Example of *args.**
 
     def calculate_total_expenses(*expenses):
     print(f"Expenses received: {expenses}")
