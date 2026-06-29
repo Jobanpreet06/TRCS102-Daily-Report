@@ -495,8 +495,6 @@ True
 
 True
 
-Absolutely! Since Part 2 + Part 3 together are also very long, I’ll continue them in the same GitHub style.
-
 ## 2. Python Loops
 
 Loops allow a block of code to execute repeatedly until a condition becomes false or all elements of a sequence are processed.
