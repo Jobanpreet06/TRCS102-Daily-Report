@@ -1147,7 +1147,7 @@ Name Swastik
 
 Class BTech
 
-**6.2 Example of *args.**
+6.2 Example of *args.
 
     def calculate_total_expenses(*expenses):
     print(f"Expenses received: {expenses}")
@@ -1161,7 +1161,7 @@ Expenses received: (12.5, 45.0, 100.25, 7.8)
 
 165.55
 
-**6.3 Example of **kwargs**
+6.3 Example of **kwargs
 
     def print_model_parameters(**hyperparams):
     for key,value in hyperparams.items():
