@@ -1323,283 +1323,220 @@ Day 4 focused on Python Data Structures, which are essential for storing, organi
 Python provides built-in data structures for storing collections of data.
 
 | Data Structure | Ordered | Mutable | Duplicates |
+|----------------|---------|---------|------------|
 | List | ✅	 | ✅ | ✅ | 
 | Tuple | ✅ | ❌ | ✅ |
 | Dictionary | ✅* | ✅ | Keys Unique |
 | Set | ❌	✅ | ❌ |
 
-*Ordered by insertion (Python 3.7+).
-
-⸻
-
-2. Lists
+## 2. Lists
 
 A List is an ordered and mutable collection that allows duplicate values.
 
-Creating a List
+**Creating a List**
 
-fruits = ["Apple", "Banana", "Mango"]
-print(fruits)
+    fruits = ["Apple", "Banana", "Mango"]
+    print(fruits)
 
-⸻
+**Accessing Elements**
 
-Accessing Elements
+    print(fruits[0])
+    print(fruits[-1])
 
-print(fruits[0])
-print(fruits[-1])
+**List Slicing**
 
-⸻
+    numbers = [10,20,30,40,50]
+    print(numbers[1:4])
+    print(numbers[:3])
+    print(numbers[::2])
 
-List Slicing
+**Common List Methods**
 
-numbers = [10,20,30,40,50]
-print(numbers[1:4])
-print(numbers[:3])
-print(numbers[::2])
-
-⸻
-
-Common List Methods
-
-Method	Purpose
-append()	Add element at end
-insert()	Insert at specific position
-extend()	Add multiple elements
-remove()	Remove by value
-pop()	Remove by index
-clear()	Remove all elements
-sort()	Sort list
-reverse()	Reverse list
-copy()	Create copy
-
-⸻
+| Method | Purpose |
+|--------|----------|
+| append() | Add element at end |
+| insert() | Insert at specific position |
+| extend() | Add multiple elements |
+| remove() | Remove by value |
+| pop() | Remove by index |
+| clear() | Remove all elements |
+| sort() | Sort list |
+| reverse() | Reverse list |
+| copy() | Create copy |
 
 Example
 
-numbers = [5,2,8]
-numbers.append(10)
-numbers.sort()
-print(numbers)
+    numbers = [5,2,8]
+    numbers.append(10)
+    numbers.sort()
+    print(numbers)
 
-Output
+**Output**
 
 [2,5,8,10]
 
-⸻
-
-3. Tuples
+## 3. Tuples
 
 A Tuple is an ordered but immutable collection.
 
-colors = ("Red","Green","Blue")
-print(colors[1])
+    colors = ("Red","Green","Blue")
+    print(colors[1])
 
-⸻
+**Tuple Packing**
 
-Tuple Packing
+    student = ("John",20,"BTech")
 
-student = ("John",20,"BTech")
+**Tuple Unpacking**
 
-⸻
+    name,age,course = student
+    print(name)
+    print(age)
+    print(course)
 
-Tuple Unpacking
+**Tuple Methods**
 
-name,age,course = student
-print(name)
-print(age)
-print(course)
-
-⸻
-
-Tuple Methods
-
-Method	Purpose
-count()	Count occurrences
-index()	Return index
+| Method | Purpose |
+|--------|----------|
+| count() | Count occurrences |
+| index() | Return index |
 
 Example
 
-numbers = (1,2,2,3)
-print(numbers.count(2))
-print(numbers.index(3))
+    numbers = (1,2,2,3)
+    print(numbers.count(2))
+    print(numbers.index(3))
 
-⸻
-
-4. Dictionaries
+## 4. Dictionaries
 
 A Dictionary stores data in key-value pairs.
 
-student = {
-"name":"Alice",
-"Age":20,
-"Course":"AI"
-}
+    student = {
+    "name":"Alice",
+    "Age":20,
+    "Course":"AI"
+    }
 
-⸻
+**Accessing Values**
 
-Accessing Values
+    print(student["name"])
+    print(student.get("Age"))
 
-print(student["name"])
-print(student.get("Age"))
+**Adding & Updating**
 
-⸻
+    student["Age"] = 21
+    student["City"] = "Delhi"
 
-Adding & Updating
+**Removing Items**
 
-student["Age"] = 21
-student["City"] = "Delhi"
+    student.pop("City")
 
-⸻
+**Dictionary Methods**
 
-Removing Items
+| Method | Purpose |
+|--------|----------|
+| keys() | Returns all keys |
+| values() | Returns all values |
+| items() | Returns key-value pairs |
+| get() | Returns value safely |
+| update() | Update dictionary |
+| pop() | Remove key |
 
-student.pop("City")
+**Iterating Dictionary**
 
-⸻
-
-Dictionary Methods
-
-Method	Purpose
-keys()	Returns all keys
-values()	Returns all values
-items()	Returns key-value pairs
-get()	Returns value safely
-update()	Update dictionary
-pop()	Remove key
-
-⸻
-
-Iterating Dictionary
-
-for key,value in student.items():
+    for key,value in student.items():
     print(key,value)
 
-⸻
-
-5. Sets
+## 5. Sets
 
 A Set is an unordered collection of unique elements.
 
-numbers = {1,2,2,3,4}
-print(numbers)
+    numbers = {1,2,2,3,4}
+    print(numbers)
 
-Output
+**Output**
 
 {1,2,3,4}
 
-⸻
+**Set Operations**
 
-Set Operations
+    A = {1,2,3}
+    B = {3,4,5}
 
-A = {1,2,3}
-B = {3,4,5}
+**Union**
 
-Union
+    print(A | B)
 
-print(A | B)
+**Intersection**
 
-Intersection
+    print(A & B)
 
-print(A & B)
+**Difference**
 
-Difference
+    print(A - B)
 
-print(A - B)
+**Symmetric Difference**
 
-Symmetric Difference
+    print(A ^ B)
 
-print(A ^ B)
+**Set Methods**
 
-⸻
+| Method | Purpose |
+|--------|----------|
+| add() | Add element |
+| remove() | Remove element |
+| discard() | Remove safely |
+| clear() | Empty set |
+| union() | Combine sets |
+| intersection() | Common elements |
+| difference() | Difference between sets |
 
-Set Methods
+## AI/ML Applications
 
-Method	Purpose
-add()	Add element
-remove()	Remove element
-discard()	Remove safely
-clear()	Empty set
-union()	Combine sets
-intersection()	Common elements
-difference()	Difference between sets
+- Lists → Store datasets and predictions.
+- Tuples → Store fixed records.
+- Dictionaries → Feature mappings and model parameters.
+- Sets → Remove duplicate values and unique labels.
 
-⸻
+**Practice Example**
 
-AI/ML Applications
+    marks = [80,92,75,60]
+    average = sum(marks)/len(marks)
+    print("Average =",average)
 
-* Lists → Store datasets and predictions.
-* Tuples → Store fixed records.
-* Dictionaries → Feature mappings and model parameters.
-* Sets → Remove duplicate values and unique labels.
+**Exercise 1 – List Operations**
 
-⸻
+    numbers=[10,20,30]
+    numbers.append(40)
+    numbers.remove(20)
+    print(numbers)
 
-Practice Example
-
-marks = [80,92,75,60]
-average = sum(marks)/len(marks)
-print("Average =",average)
-
-⸻
-
-Exercise 1 – List Operations
-
-numbers=[10,20,30]
-numbers.append(40)
-numbers.remove(20)
-print(numbers)
-
-Output
+**Output**
 
 [10,30,40]
 
-⸻
+**Exercise 2 – Tuple Unpacking**
 
-Exercise 2 – Tuple Unpacking
+    student=("Rahul",19,"BCA")
+    name,age,course=student
+    print(name)
+    print(age)
+    print(course)
 
-student=("Rahul",19,"BCA")
-name,age,course=student
-print(name)
-print(age)
-print(course)
+**Exercise 3 – Dictionary Update**
 
-⸻
+    employee={
+    "name":"Amit",
+    "salary":40000
+    }
+    employee["salary"]=50000
+    employee["department"]="IT"
+    print(employee)
 
-Exercise 3 – Dictionary Update
+**Exercise 4 – Set Operations**
 
-employee={
-"name":"Amit",
-"salary":40000
-}
-employee["salary"]=50000
-employee["department"]="IT"
-print(employee)
+    A={1,2,3,4}
+    B={3,4,5}
+    print(A|B)
+    print(A&B)
+    print(A-B)
 
-⸻
-
-Exercise 4 – Set Operations
-
-A={1,2,3,4}
-B={3,4,5}
-print(A|B)
-print(A&B)
-print(A-B)
-
-⸻
-
-Key Takeaways
-
-* Lists are ordered, mutable, and allow duplicates.
-* Tuples are ordered but immutable.
-* Dictionaries store data using key-value pairs.
-* Sets store unique elements only.
-* Each data structure has different use cases in AI & Machine Learning.
-* Built-in methods simplify data manipulation.
-
-⸻
-
-⭐ Day 4 Completed – Python Data Structures (Lists, Tuples, Dictionaries & Sets)
-
-⸻
-
-Next: I’ll provide Day 5 (Pages 8–20) in the same GitHub-ready format with all exercises, practical questions, and solutions included.
