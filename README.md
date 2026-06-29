@@ -1327,7 +1327,7 @@ Python provides built-in data structures for storing collections of data.
 | List | ✅	 | ✅ | ✅ | 
 | Tuple | ✅ | ❌ | ✅ |
 | Dictionary | ✅* | ✅ | Keys Unique |
-| Set | ❌	✅ | ❌ |
+| Set | ❌ | ✅ | ❌ |
 
 ## 2. Lists
 
