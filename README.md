@@ -1,23 +1,23 @@
 # TRCS102-Daily-Report
 ## DAY1 Of TRAINING 
 
-** Python Basics – Variables & Data Types ** 
+**Python Basics – Variables & Data Types** 
 
 The concepts that are covered on Day 1 of Industrial Training for AI & Machine Learning are - Python fundamentals such as variables, data types, memory references, mutability, type casting, and coding exercises.
 
-Learning Objectives:- 
+**Learning Objectives:-**
 
-Variables and Python’s memory reference model
+- Variables and Python’s memory reference model
 
-Built-in data types
+- Built-in data types
 
-Mutable vs Immutable objects
+- Mutable vs Immutable objects
 
-Type casting (Implicit & Explicit)
+- Type casting (Implicit & Explicit)
 
-Variable naming conventions (PEP 8)
+- Variable naming conventions (PEP 8)
 
-Basic Python programming through assignments and exercises
+- Basic Python programming through assignments and exercises
 
 ## 1. Variables
 
@@ -53,7 +53,7 @@ Assigning one variable to another creates another reference to the same object.
 
     print(x is y)
 
-** Output **
+**Output**
 
 True
 
@@ -71,7 +71,7 @@ Python automatically determines the data type.
 
 ## 4. Built-in Data Types
 
-** Numeric Types **
+**Numeric Types**
 
 int
 
@@ -85,14 +85,14 @@ complex
 
     c = 2 + 3j
 
-** String **
+**String**
 
     text = "Hello World"
 
 Strings are enclosed in single, double, or triple quotes.
 
 
-** Boolean **
+**Boolean**
 
 True
 
@@ -107,7 +107,7 @@ Represents the absence of a value.
 
 ## 5. Collection Data Types 
 
-** List **
+**List**
 
 Ordered
 
@@ -117,7 +117,7 @@ Allows duplicates
 
     fruits = ["Apple", "Banana", "Apple"]
 
-** Tuple **
+**Tuple**
 
 Ordered
 
@@ -127,7 +127,7 @@ Allows duplicates
 
     fruits = ("Apple", "Banana")
 
-** Dictionary **
+**Dictionary**
 
 Stores data in key-value pairs.
 
@@ -139,7 +139,7 @@ Stores data in key-value pairs.
 
     }
 
-** Set **
+**Set**
 
 Unordered
 
@@ -157,7 +157,7 @@ Output
 
 ## 6. Mutable vs Immutable
 
-** Immutable Objects **
+**Immutable Objects**
 
 Cannot be changed after creation.
 
@@ -181,7 +181,7 @@ Example
 
 A new object is created.
 
-** Mutable Objects **
+**Mutable Objects**
 
 Can be modified without creating a new object.
 
@@ -200,7 +200,7 @@ Example
 
 Memory address remains the same.
 
-** Copying Lists **
+**Copying Lists**
 
 Instead of
 
@@ -215,7 +215,7 @@ to avoid changing the original list.
 
 ## 7. Type Casting
 
-** Implicit Type Casting **
+**Implicit Type Casting**
 
 Python converts automatically.
 
@@ -225,7 +225,7 @@ Output
 
 15.5
 
-** Explicit Type Casting **
+**Explicit Type Casting**
 
 int("123")
 
@@ -253,29 +253,29 @@ Case-sensitive
 
 Cannot use keywords
 
-** Best Practices (PEP 8) **
+**Best Practices (PEP 8)**
 
-Variables
+*Variables*
 
 student_name
 
 learning_rate
 
-Classes
+*Classes*
 
 Student
 NeuralNetwork
 
-Constants
+*Constants*
 
 PI
 MAX_EPOCHS
 
 Always use meaningful names.
 
-** Assignment ** 
+**Assignment** 
 
-* Student Result Card *
+*Student Result Card*
 
     name = input("Enter Student Name: ")
 
@@ -303,7 +303,7 @@ Always use meaningful names.
 
     print("="*30)
 
-** Coding Exercises **
+**Coding Exercises**
 
 Exercise 1 – Identity vs Equality
 
@@ -327,11 +327,11 @@ True
 
 False
 
-* is compares memory addresses.
+- is compares memory addresses.
 
-* == compares values.
+- == compares values.
 
-** Exercise 2 – Modify Tuple **
+**Exercise 2 – Modify Tuple**
 
     fruits = ("apple","pear","cherry")
 
@@ -347,7 +347,7 @@ Output
 
 ('apple', 'banana', 'cherry')
 
-** Exercise 3 – AI Hyperparameters Dictionary **
+**Exercise 3 – AI Hyperparameters Dictionary**
 
     hyperparameters = {
 
@@ -377,7 +377,7 @@ Output
 
     print(hyperparameters)
 
-** Exercise 4 – Set Magic **
+**Exercise 4 – Set Magic**
 
     roles = [
 
