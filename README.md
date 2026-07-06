@@ -1,5 +1,5 @@
 # TRCS102-Daily-Report
-## DAY1 Of TRAINING 
+## DAY 1 Of TRAINING 
 
 **Python Basics – Variables & Data Types** 
 
