@@ -1780,7 +1780,7 @@ Remove invalid values (-99.0) from prediction data.
 
 ## DAY 6 OF TRAINING
 
-## NumPy Operations for AI & Machine Learning
+**NumPy Operations for AI & Machine Learning**
 
 Day 6 focused on **NumPy (Numerical Python)**, one of the most important libraries in AI, Machine Learning, and Data Science. The session covered NumPy arrays, vectorized operations, indexing and slicing, data filtering, statistical analysis, reshaping, matrix multiplication, and practical exercises related to data preprocessing.
 
@@ -1800,7 +1800,7 @@ Day 6 focused on **NumPy (Numerical Python)**, one of the most important librari
 
 **NumPy (Numerical Python)** is a powerful Python library used for numerical computations and handling multidimensional arrays efficiently.
 
-### Why NumPy?
+**Why NumPy?**
 
 - Faster than Python Lists
 - Memory Efficient
@@ -1845,7 +1845,7 @@ print(numbers * 2)
 [ 2  4  6  8 10]
 ```
 
-## Performance Comparison
+**Performance Comparison**
 
 NumPy operations are significantly faster than traditional Python loops.
 
@@ -1877,7 +1877,7 @@ dataset = np.array([
 ])
 ```
 
-## Access Single Element
+**Access Single Element**
 
 ```python
 print(dataset[1,1])
@@ -1889,7 +1889,7 @@ print(dataset[1,1])
 85
 ```
 
-## Access Entire Row
+**Access Entire Row**
 
 ```python
 print(dataset[2,:])
@@ -1901,7 +1901,7 @@ print(dataset[2,:])
 [31 62 780]
 ```
 
-## Access Entire Column
+**Access Entire Column**
 
 ```python
 print(dataset[:,2])
@@ -1913,7 +1913,7 @@ print(dataset[:,2])
 [710 690 780 620]
 ```
 
-## Feature and Label Split
+**Feature and Label Split**
 
 ```python
 X = dataset[:,0:2]
@@ -1938,7 +1938,7 @@ print(y)
 
 This technique is commonly used when preparing data for machine learning models. :contentReference[oaicite:1]{index=1}
 
-## Boolean Indexing
+**Boolean Indexing**
 
 ```python
 temp = np.array([20,30,10,25,15,28,3])
