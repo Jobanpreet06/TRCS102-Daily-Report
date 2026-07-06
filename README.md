@@ -2579,7 +2579,7 @@ print(arr)
 [ 0 12 18 25  0 30]
 ```
 
-## 11. Practical Example – Student Marks
+**Practical Example – Student Marks**
 
 ```python
 marks = np.array([55,42,88,76,34,91,67])
