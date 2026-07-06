@@ -2702,3 +2702,502 @@ Safe Copy: [ 20 999  40]
 - Memory-efficient processing using Views
 - Safe dataset manipulation using Copies
 
+## DAY 8 OF TRAINING
+
+**Pandas Basics – Series, DataFrames & Data Exploration**
+
+Day 8 focused on the fundamentals of **Pandas**, a powerful Python library used for data manipulation and analysis. The session covered creating Series and DataFrames, loading datasets, exploring data, selecting rows and columns, and understanding dataset structure through various built-in functions.
+
+**Learning Objectives:-**
+
+- Understand Pandas and its importance
+- Create Series and DataFrames
+- Load datasets using `read_csv()`
+- Explore datasets using built-in functions
+- Select rows and columns
+- Use `loc[]` and `iloc[]`
+- Perform basic data analysis
+- Solve practical exercises
+
+## 1. Introduction to Pandas
+
+**Pandas** is an open-source Python library used for data manipulation, analysis, and preprocessing. It provides fast, flexible, and easy-to-use data structures.
+
+**Why Pandas?**
+
+- Easy data handling
+- Fast processing
+- Supports CSV, Excel & SQL
+- Handles missing values
+- Used extensively in AI & Machine Learning
+
+```python
+import pandas as pd
+```
+
+## 2. Pandas Data Structures
+
+Pandas mainly provides two data structures.
+
+| Data Structure | Description |
+|---------------|-------------|
+| **Series** | One-dimensional labeled array |
+| **DataFrame** | Two-dimensional table with rows and columns |
+
+## 3. Pandas Series
+
+A **Series** is a one-dimensional array capable of holding any data type.
+
+**Example**
+
+```python
+import pandas as pd
+
+marks = pd.Series([90,85,78,95])
+
+print(marks)
+```
+
+**Output**
+
+```text
+0    90
+1    85
+2    78
+3    95
+dtype: int64
+```
+
+## 4. Pandas DataFrame
+
+A **DataFrame** is a two-dimensional tabular data structure consisting of rows and columns.
+
+**Example**
+
+```python
+student = {
+
+    "Name":["Alice","Bob","John"],
+
+    "Age":[20,21,19],
+
+    "Marks":[90,80,95]
+
+}
+
+df = pd.DataFrame(student)
+
+print(df)
+```
+
+## 5. Reading CSV Files
+
+Datasets are commonly loaded using `read_csv()`.
+
+```python
+df = pd.read_csv("data.csv")
+
+print(df.head())
+```
+
+## 6. Exploring the Dataset
+
+**Display First Rows**
+
+```python
+df.head()
+```
+
+Displays the first **5 rows**.
+
+**Display Last Rows**
+
+```python
+df.tail()
+```
+
+Displays the last **5 rows**.
+
+**Dataset Information**
+
+```python
+df.info()
+```
+
+Shows:
+
+- Number of rows
+- Number of columns
+- Data types
+- Missing values
+- Memory usage
+
+**Statistical Summary**
+
+```python
+df.describe()
+```
+
+Displays:
+
+- Count
+- Mean
+- Standard Deviation
+- Minimum
+- Maximum
+- Quartiles
+
+**Display Column Names**
+
+```python
+print(df.columns)
+```
+
+**Display Data Types**
+
+```python
+print(df.dtypes)
+```
+
+Example Output
+
+```text
+CustomerID      int64
+Age           float64
+Gender         object
+Income        float64
+Purchased      object
+```
+
+## 7. Selecting Data
+
+**Selecting a Single Column**
+
+```python
+income = df["Income"]
+
+print(income)
+```
+
+Returns a **Series**.
+
+**Selecting Multiple Columns**
+
+```python
+features = df[["Age","Income"]]
+
+print(features)
+```
+
+Returns a **DataFrame**.
+
+## 8. Row Selection using `iloc[]`
+
+`iloc[]` selects data using **index positions**.
+
+**Example**
+
+```python
+df.iloc[1:4,1:4]
+```
+
+## 9. Row Selection using `loc[]`
+
+`loc[]` selects data using **row labels and column names**.
+
+**Example**
+
+```python
+df.loc[1,"Age"]
+```
+
+**Output**
+
+```text
+47
+```
+
+**Exercise 1 – Create a DataFrame**
+
+```python
+student = {
+
+    "Name":["Rahul","Priya","Aman"],
+
+    "Age":[20,21,19],
+
+    "Marks":[88,92,85]
+
+}
+
+df = pd.DataFrame(student)
+
+print(df)
+```
+
+**Exercise 2 – Dataset Exploration**
+
+```python
+df = pd.read_csv("students.csv")
+
+print(df.head())
+
+print(df.info())
+
+print(df.describe())
+```
+
+**Exercise 3 – Column Selection**
+
+```python
+print(df["Marks"])
+
+print(df[["Name","Marks"]])
+```
+
+**Exercise 4 – Row Selection**
+
+```python
+print(df.iloc[0:3])
+
+print(df.loc[2])
+```
+
+## DAY 9 OF TRAINING
+
+**Pandas Data Cleaning, Boolean Indexing & GroupBy**
+
+Day 9 focused on **data preprocessing using Pandas**, including filtering datasets with Boolean Indexing, handling missing values, grouping data for analysis, and solving practical data-cleaning exercises commonly used in AI & Machine Learning.
+
+**Learning Objectives:-**
+
+- Understand Boolean Indexing
+- Filter data using single and multiple conditions
+- Detect Missing Values
+- Handle missing data using `fillna()`
+- Remove missing values using `dropna()`
+- Perform GroupBy operations
+- Calculate Aggregate Statistics
+- Solve Data Cleaning Exercises
+
+## 1. Boolean Indexing
+
+Boolean Indexing is used to filter rows that satisfy a given condition.
+
+**Example**
+
+```python
+high_income = df[df["Income"] > 60000]
+
+print(high_income)
+```
+
+Returns all customers having income greater than **60000**.
+
+**Multiple Conditions**
+
+```python
+filtered = df[(df["Age"] >= 25) & (df["Gender"] == "F")]
+
+print(filtered)
+```
+
+**Using Boolean Mask**
+
+```python
+mask = df["Income"] > 60000
+
+print(mask)
+
+high_income = df[mask]
+
+print(high_income)
+```
+
+## 2. Missing Values
+
+Real-world datasets usually contain missing values that must be handled before training Machine Learning models.
+
+**Detect Missing Values**
+
+```python
+df.isnull().sum()
+```
+
+**Example Output**
+
+```text
+CustomerID    0
+Age           1
+Gender        1
+Income        1
+Purchased     0
+```
+
+**Fill Missing Values**
+
+Replace missing **Age** values with the column mean.
+
+```python
+mean_age = df["Age"].mean()
+
+df["Age"] = df["Age"].fillna(mean_age)
+```
+
+Replace missing **Income** values.
+
+```python
+mean_income = df["Income"].mean()
+
+df["Income"] = df["Income"].fillna(mean_income)
+```
+
+**Drop Missing Values**
+
+Remove rows containing missing Gender values.
+
+```python
+df = df.dropna(subset=["Gender"])
+```
+
+**Verify Dataset**
+
+```python
+df.isnull().sum()
+```
+
+**Output**
+
+```text
+CustomerID    0
+Age           0
+Gender        0
+Income        0
+Purchased     0
+```
+
+## 3. GroupBy
+
+`groupby()` groups similar records together for analysis.
+
+**Average Income by Gender**
+
+```python
+df.groupby("Gender")["Income"].mean()
+```
+
+**Average Age by Gender**
+
+```python
+df.groupby("Gender")["Age"].mean()
+```
+
+**Multiple Columns**
+
+```python
+cols = ["Income","Age"]
+
+df.groupby("Gender")[cols].mean()
+```
+
+**Output**
+
+| Gender | Income | Age |
+|---------|--------:|----:|
+| F | 44666.67 | 26.27 |
+| M | 69875.00 | 39.00 |
+
+**Group by Purchased**
+
+```python
+df.groupby("Purchased")[cols].mean()
+```
+
+**Output**
+
+| Purchased | Income | Age |
+|------------|--------:|----:|
+| No | 42250 | 25.0 |
+| Yes | 73500 | 40.9 |
+
+## 4. Aggregate Functions
+
+Common aggregation functions used with GroupBy.
+
+| Function | Purpose |
+|----------|---------|
+| `mean()` | Average value |
+| `sum()` | Total |
+| `count()` | Number of records |
+| `max()` | Maximum value |
+| `min()` | Minimum value |
+| `std()` | Standard Deviation |
+
+**Exercise 1 – Dataset Inspection**
+
+```python
+eval_df = pd.read_csv("student.csv")
+
+print(eval_df.head())
+
+print(eval_df.info())
+
+print(eval_df.describe())
+```
+
+**Exercise 2 – Data Filtering**
+
+Display students who passed.
+
+```python
+passed = eval_df[eval_df["Passed"]=="Yes"]
+
+print(passed)
+```
+
+Display only selected columns.
+
+```python
+passed = eval_df[eval_df["Passed"]=="Yes"][["HoursStudied","Grade"]]
+
+print(passed)
+```
+
+**Exercise 3 – Missing Value Handling**
+
+```python
+mean_hours = eval_df["HoursStudied"].mean()
+
+clean_df = eval_df.copy()
+
+clean_df["HoursStudied"] = clean_df["HoursStudied"].fillna(mean_hours)
+
+clean_df = clean_df.dropna(subset=["Grade"])
+
+print(clean_df)
+```
+
+**Exercise 4 – GroupBy Summary**
+
+```python
+summary = clean_df.groupby("Passed")[["HoursStudied","Grade","Attendance"]].mean()
+
+print(summary)
+```
+
+**Output**
+
+| Passed | HoursStudied | Grade | Attendance |
+|---------|-------------:|------:|-----------:|
+| No | 6.75 | 53.50 | 88.00 |
+| Yes | 15.10 | 86.00 | 94.33 |
+
+**AI/ML Applications**
+
+- Data Cleaning
+- Feature Selection
+- Missing Value Treatment
+- Customer Data Analysis
+- Exploratory Data Analysis (EDA)
+- Dataset Preprocessing
+- Model Preparation
