@@ -5558,7 +5558,7 @@ print("MAE :", mean_absolute_error(y_test, poly_pred))
 print("R² :", r2_score(y_test, poly_pred))
 ```
 
-# AI/ML Applications
+**AI/ML Applications**
 
 - House Price Prediction
 - Stock Market Analysis
