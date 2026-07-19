@@ -4056,3 +4056,709 @@ plt.show()
 - Data Preprocessing
 - Pattern Recognition
 
+## DAY 12 OF TRAINING
+
+**Exploratory Data Analysis (EDA) on House Price Dataset**
+
+Day 12 focused on **Exploratory Data Analysis (EDA)** using a real-world **King County House Price Dataset**. The session covered loading and cleaning data, understanding dataset statistics, performing univariate and bivariate analysis, visualizing data using Seaborn & Matplotlib, identifying outliers, analyzing feature relationships, and preparing the dataset for Machine Learning. :contentReference[oaicite:0]{index=0}
+
+**Learning Objectives:-**
+
+- Understand Exploratory Data Analysis (EDA)
+- Load and inspect datasets
+- Select important features
+- Perform statistical analysis
+- Create visualizations using Seaborn
+- Detect outliers
+- Study feature relationships
+- Generate correlation heatmaps
+- Prepare data for Machine Learning
+
+## 1. Import Libraries
+
+Import the required Python libraries.
+
+```python
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
+```
+
+## 2. Load Dataset
+
+Load the King County House Price dataset.
+
+```python
+df = pd.read_csv("kc_house_data.csv")
+
+print(df.head())
+```
+
+Display dataset size.
+
+```python
+print(df.shape)
+```
+
+**Output**
+
+```
+21613 Rows
+21 Columns
+```
+
+The dataset contains **21,613 houses** with **21 features**. :contentReference[oaicite:1]{index=1}
+
+## 3. Select Important Features
+
+Choose only useful columns for analysis.
+
+```python
+friendly_cols = [
+
+"price",
+
+"bedrooms",
+
+"bathrooms",
+
+"sqft_living",
+
+"floors",
+
+"waterfront",
+
+"yr_built",
+
+"condition"
+
+]
+
+df = df[friendly_cols]
+
+df.head()
+```
+
+Selected Features
+
+| Feature | Description |
+|----------|-------------|
+| price | House Price |
+| bedrooms | Number of Bedrooms |
+| bathrooms | Number of Bathrooms |
+| sqft_living | Living Area |
+| floors | Number of Floors |
+| waterfront | Waterfront View |
+| yr_built | Year Built |
+| condition | House Condition |
+
+This simplifies the dataset by keeping only the most understandable and relevant features. :contentReference[oaicite:2]{index=2}
+
+## 4. Dataset Statistics
+
+Display summary statistics.
+
+```python
+df.describe()
+```
+
+Displays
+
+- Count
+- Mean
+- Standard Deviation
+- Minimum
+- Maximum
+- Quartiles
+
+**Dataset Information**
+
+```python
+df.info()
+```
+
+Shows
+
+- Data types
+- Memory usage
+- Non-null values
+
+The selected dataset has **8 columns**, all without missing values. :contentReference[oaicite:3]{index=3}
+
+## 5. Univariate Analysis – Price Distribution
+
+Visualize house prices using Histogram.
+
+```python
+plt.figure(figsize=(10,5))
+
+sns.histplot(
+    data=df,
+    x="price",
+    bins=50,
+    kde=True,
+    color="red"
+)
+
+plt.title("House Price Distribution")
+
+plt.xlabel("Price")
+
+plt.ylabel("Number of Houses")
+
+plt.show()
+```
+
+**Observation**
+
+- Most houses have moderate prices.
+- Very expensive houses appear as outliers.
+
+:contentReference[oaicite:4]{index=4}
+
+## 6. Bedroom Count Analysis
+
+Display the frequency of bedroom counts.
+
+```python
+plt.figure(figsize=(10,5))
+
+sns.countplot(
+    data=df,
+    x="bedrooms",
+    hue="bedrooms",
+    palette="Set2",
+    legend=False
+)
+
+plt.title("Bedroom Counts")
+
+plt.show()
+```
+
+**Detect Outliers**
+
+```python
+giant_outlier = df[df["bedrooms"] > 10]
+
+print(giant_outlier)
+```
+
+**Observation**
+
+- Most houses contain **3–4 bedrooms**.
+- Two extreme houses have more than **10 bedrooms**, including one with **33 bedrooms**.
+
+:contentReference[oaicite:5]{index=5}
+
+## 7. Bivariate Analysis – Size vs Price
+
+Study the relationship between living area and price.
+
+```python
+plt.figure(figsize=(10,6))
+
+sns.scatterplot(
+    data=df,
+    x="sqft_living",
+    y="price",
+    hue="waterfront"
+)
+
+plt.title("House Size vs Price")
+
+plt.show()
+```
+
+**Observation**
+
+- Larger houses generally cost more.
+- Waterfront houses tend to have higher prices.
+
+:contentReference[oaicite:6]{index=6}
+
+## 8. Waterfront vs Price
+
+Compare prices of waterfront and non-waterfront houses.
+
+```python
+plt.figure(figsize=(8,5))
+
+sns.boxplot(
+    x="waterfront",
+    y="price",
+    data=df,
+    hue="waterfront",
+    palette="pastel"
+)
+
+plt.title("Waterfront vs House Price")
+
+plt.show()
+```
+
+**Observation**
+
+- Waterfront houses are significantly more expensive.
+
+:contentReference[oaicite:7]{index=7}
+
+## 9. House Condition vs Price
+
+Analyze the effect of house condition on price.
+
+```python
+plt.figure(figsize=(8,5))
+
+sns.barplot(
+    x="condition",
+    y="price",
+    data=df,
+    hue="condition",
+    palette="coolwarm"
+)
+
+plt.title("House Condition vs Price")
+
+plt.show()
+```
+
+**Observation**
+
+Better-maintained houses usually have higher average prices.
+
+:contentReference[oaicite:8]{index=8}
+
+## 10. Correlation Heatmap
+
+Display correlation between numerical features.
+
+```python
+plt.figure(figsize=(10,8))
+
+correlation = df.corr()
+
+sns.heatmap(
+    correlation,
+    annot=True,
+    cmap="coolwarm",
+    linewidths=0.5,
+    vmin=-1,
+    vmax=1
+)
+
+plt.title("Correlation Heatmap")
+
+plt.show()
+```
+
+**Observation**
+
+- Living area has the strongest positive correlation with price.
+- Waterfront also positively affects price.
+
+:contentReference[oaicite:9]{index=9}
+
+## 11. Save Processed Dataset
+
+```python
+df.to_csv(
+    "kc_house_filtered.csv",
+    index=False
+)
+```
+
+The filtered dataset is saved for further Machine Learning tasks. :contentReference[oaicite:10]{index=10}
+
+**Summary of Findings**
+
+- House size has the strongest impact on price.
+- Waterfront houses are generally more expensive.
+- Outliers such as houses with unusually high bedroom counts were identified.
+- Correlation analysis helps understand relationships between variables.
+- The cleaned dataset is ready for further Machine Learning analysis.
+
+**AI/ML Applications**
+
+- Exploratory Data Analysis (EDA)
+- Feature Selection
+- Outlier Detection
+- Data Cleaning
+- Correlation Analysis
+- Data Visualization
+- Dataset Preparation for Machine Learning
+
+## DAY 13 OF TRAINING
+
+**Data Preprocessing for Machine Learning**
+
+Day 13 focused on **Data Preprocessing**, an essential step before training Machine Learning models. The session covered handling missing values, treating outliers, feature scaling, one-hot encoding, and preparing the final cleaned dataset for ML algorithms using Scikit-learn and Pandas. :contentReference[oaicite:0]{index=0}
+
+**Learning Objectives:-**
+
+- Understand Data Preprocessing
+- Load and inspect datasets
+- Handle Missing Values (Imputation)
+- Detect & Treat Outliers
+- Perform Feature Scaling
+- Apply One-Hot Encoding
+- Prepare final ML-ready dataset
+- Save preprocessed data
+
+## 1. Import Libraries & Load Dataset
+
+Import required libraries and load the filtered house dataset.
+
+```python
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+from sklearn.preprocessing import StandardScaler, MinMaxScaler
+
+df = pd.read_csv("kc_house_filtered.csv")
+
+df.head()
+```
+
+Check missing values.
+
+```python
+df.isnull().sum()
+```
+
+**Output**
+
+```
+price            0
+bedrooms         0
+bathrooms        0
+sqft_living      0
+floors           0
+waterfront       0
+yr_built         0
+condition        0
+```
+
+The dataset is loaded successfully and contains no missing values initially. :contentReference[oaicite:1]{index=1}
+
+## 2. Missing Value Imputation
+
+To understand missing-value handling, random values are removed from the **Year Built** column and replaced using the **Median**.
+
+**Why Median?**
+
+- Less affected by extreme values
+- Suitable for skewed numerical data
+- Produces better estimates than mean in many cases
+
+Median is preferred because it is robust against outliers. :contentReference[oaicite:2]{index=2}
+
+**Exercise 1 – Missing Value Handling**
+
+**Task**
+
+- Identify missing values
+- Replace missing values using Median
+
+**Solution**
+
+```python
+median_year = df["yr_built"].median()
+
+df["yr_built"] = df["yr_built"].fillna(median_year)
+```
+
+## 3. Outlier Capping using IQR
+
+Extreme values can negatively affect Machine Learning models.
+
+Instead of deleting them, **IQR (Interquartile Range) Capping** is used.
+
+**Formula**
+
+```
+IQR = Q3 - Q1
+
+Lower Limit = Q1 − 1.5 × IQR
+
+Upper Limit = Q3 + 1.5 × IQR
+```
+
+**Function**
+
+```python
+def find_caps(column):
+
+    Q1 = column.quantile(0.25)
+
+    Q3 = column.quantile(0.75)
+
+    IQR = Q3 - Q1
+
+    lower = Q1 - 1.5 * IQR
+
+    upper = Q3 + 1.5 * IQR
+
+    return lower, upper
+```
+
+Apply capping.
+
+```python
+columns = ["price","sqft_living","bedrooms"]
+
+for col in columns:
+
+    lower, upper = find_caps(df[col])
+
+    df[col] = df[col].clip(lower, upper)
+```
+
+**Output**
+
+```
+Price Outliers Capped
+
+Sqft Living Outliers Capped
+
+Bedroom Outliers Capped
+```
+
+IQR capping limits extreme values while preserving the dataset. :contentReference[oaicite:3]{index=3}
+
+**Exercise 2 – Outlier Detection**
+
+**Task**
+
+- Detect outliers
+- Cap them using IQR
+
+**Solution**
+
+```python
+sns.boxplot(data=df,
+            y="sqft_living")
+
+plt.show()
+```
+
+## 4. Feature Scaling
+
+Machine Learning algorithms perform better when numerical features are on similar scales.
+
+Two scaling techniques are used.
+
+| Scaler | Purpose |
+|---------|----------|
+| MinMaxScaler | Converts values between 0 and 1 |
+| StandardScaler | Mean = 0, Standard Deviation = 1 |
+
+:contentReference[oaicite:4]{index=4}
+
+**Min-Max Scaling**
+
+```python
+from sklearn.preprocessing import MinMaxScaler
+
+scaler = MinMaxScaler()
+
+df["Scaled_size"] = scaler.fit_transform(
+    df[["sqft_living"]]
+)
+```
+
+**Standard Scaling**
+
+```python
+from sklearn.preprocessing import StandardScaler
+
+std = StandardScaler()
+
+df["Year_Scaled"] = std.fit_transform(
+    df[["yr_built"]]
+)
+```
+
+**Output**
+
+New columns created
+
+```
+Scaled_size
+
+Year_Scaled
+```
+
+**Exercise 3 – Scaling Features**
+
+**Task**
+
+Normalize house size and standardize construction year.
+
+**Solution**
+
+```python
+minmax = MinMaxScaler()
+
+df["Scaled_size"] = minmax.fit_transform(
+    df[["sqft_living"]]
+)
+
+standard = StandardScaler()
+
+df["Year_Scaled"] = standard.fit_transform(
+    df[["yr_built"]]
+)
+```
+
+## 5. One-Hot Encoding
+
+Machine Learning models cannot understand text values directly.
+
+One-Hot Encoding converts categorical values into binary columns.
+
+Example
+
+| Neighborhood | Budget | Mid-Range | Premium |
+|--------------|:------:|:---------:|:-------:|
+| Budget | 1 | 0 | 0 |
+| Premium | 0 | 0 | 1 |
+| Mid-Range | 0 | 1 | 0 |
+
+A random **Neighborhood** category is created and encoded using `pd.get_dummies()`. :contentReference[oaicite:5]{index=5}
+
+**Code**
+
+```python
+neighborhoods = [
+
+"Budget",
+
+"Mid-Range",
+
+"Premium"
+
+]
+
+df["Neighborhood"] = np.random.choice(
+    neighborhoods,
+    size=len(df)
+)
+
+df_encoded = pd.get_dummies(
+    df,
+    columns=["Neighborhood"],
+    prefix="Loc",
+    dtype=int
+)
+```
+
+**New Columns**
+
+```
+Loc_Budget
+
+Loc_Mid-Range
+
+Loc_Premium
+```
+
+**Exercise 4 – One-Hot Encoding**
+
+**Task**
+
+Convert Neighborhood into numerical columns.
+
+**Solution**
+
+```python
+df_encoded = pd.get_dummies(
+
+    df,
+
+    columns=["Neighborhood"],
+
+    prefix="Loc"
+
+)
+```
+
+## 6. Final Dataset Preparation
+
+Select only important ML features.
+
+```python
+final_cols = [
+
+"price",
+
+"bedrooms",
+
+"bathrooms",
+
+"Scaled_size",
+
+"floors",
+
+"waterfront",
+
+"sqft_living",
+
+"condition",
+
+"Loc_Budget",
+
+"Loc_Mid-Range",
+
+"Loc_Premium"
+
+]
+
+df_final = df_encoded[final_cols]
+```
+
+Save dataset.
+
+```python
+df_final.to_csv(
+
+"kc_house_preprocessed.csv",
+
+index=False
+
+)
+```
+
+**Output**
+
+```
+Preprocessed data saved successfully as
+
+kc_house_preprocessed.csv
+```
+
+The final dataset contains cleaned, scaled, and encoded features ready for Machine Learning. :contentReference[oaicite:6]{index=6}
+
+**Summary**
+
+The preprocessing pipeline includes:
+
+- Loading dataset
+- Handling missing values
+- Outlier treatment
+- Feature scaling
+- One-Hot Encoding
+- Saving final ML-ready dataset
+
+**AI/ML Applications**
+
+- Data Cleaning
+- Missing Value Treatment
+- Outlier Handling
+- Feature Engineering
+- Data Transformation
+- Machine Learning Preprocessing
+- Model Optimization
