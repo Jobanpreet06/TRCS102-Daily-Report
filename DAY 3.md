@@ -418,7 +418,3 @@ print(f"Fibonacci(6) = {fibonacci(6)}")
 **Output**
 
 Fibonacci(6) = 8
-
-- Fewer passengers are predicted to survive.
-
-> **Note:** The notebook shows a `NameError` because it uses `X_test_bin`, which was not defined. 
