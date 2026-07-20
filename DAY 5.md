@@ -1,4 +1,3 @@
-
 ## DAY 5 OF TRAINING
 
 **Python Strings, List Comprehensions & Nested Data Structures**
