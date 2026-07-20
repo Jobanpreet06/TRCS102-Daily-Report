@@ -6440,3 +6440,733 @@ accuracy_score(
 - Sentiment Analysis
 - Titanic Survival Prediction
 
+## DAY 18 OF TRAINING
+
+**Decision Trees & Random Forests**
+
+Day 18 focused on **Decision Trees** and **Random Forests**, two popular tree-based Machine Learning algorithms used for classification problems. Using the **Titanic Dataset**, we learned how trees split data using **Gini Impurity**, how overfitting occurs, techniques to regularize trees, and how Random Forest combines multiple Decision Trees to improve prediction accuracy. We also compared these models with Logistic Regression.
+
+**Learning Objectives:-**
+
+- Understand Decision Tree Classification
+- Learn Gini Impurity
+- Train Decision Tree Models
+- Visualize Decision Trees
+- Learn Tree Regularization
+- Understand Random Forests
+- Learn Feature Importance
+- Compare Classification Models
+- Evaluate Model Performance
+
+## 1. Why Tree-Based Models?
+
+Decision Trees divide data into smaller groups using conditions.
+
+Unlike Logistic Regression, they do **not** assume a linear relationship and naturally capture complex patterns.
+
+**Comparison**
+
+| Property | Logistic Regression | Decision Tree / Random Forest |
+|-----------|---------------------|-------------------------------|
+| Decision Boundary | Linear | Non-linear |
+| Scaling | Required | Not Required |
+| Feature Interaction | Manual | Automatic |
+| Interpretation | Coefficients | Tree Structure |
+
+**Advantages**
+
+- Handles non-linear data
+- No feature scaling required
+- Easy to visualize
+- Captures feature interaction automatically
+
+## 2. Import Required Libraries
+
+```python
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+from sklearn.tree import DecisionTreeClassifier, plot_tree
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.linear_model import LogisticRegression
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import accuracy_score
+```
+
+## 3. Load & Preprocess Dataset
+
+**Steps**
+
+- Load Titanic Dataset
+- Fill missing Age values
+- Fill missing Embarked values
+- Convert Gender into numerical values
+- Select Features
+
+```python
+df=pd.read_csv("train.csv")
+```
+
+## 4. Split Dataset
+
+```python
+X_train,X_test,y_train,y_test=train_test_split(
+X,y,test_size=0.20,random_state=42,stratify=y)
+```
+
+**Output**
+
+```
+Training : 712 Rows
+
+Testing : 179 Rows
+```
+
+## 5. Gini Impurity
+
+**Formula**
+
+```
+Gini = 1 − Σ(pi²)
+```
+
+| Gini | Meaning |
+|------|----------|
+| 0 | Pure Node |
+| 0.5 | Maximum Impurity |
+
+## 6. Decision Tree Model
+
+```python
+model=DecisionTreeClassifier(random_state=42)
+model.fit(X_train,y_train)
+```
+
+**Output**
+
+```
+Tree Depth : 23
+
+Leaves : 161
+
+Train Accuracy : 98.17%
+
+Test Accuracy : 80.45%
+```
+
+**Observation**
+
+Deep trees memorize training data and may overfit.
+
+## 7. Visualizing Decision Trees
+
+```python
+plot_tree(dt_shallow,
+feature_names=X.columns,
+filled=True)
+```
+
+**How to Read**
+
+- Left → True
+- Right → False
+- Colors represent predicted class
+- Samples indicate number of records
+
+## 8. Tree Regularization
+
+| Hyperparameter | Purpose |
+|---------------|---------|
+| max_depth | Limits Tree Height |
+| min_samples_split | Minimum samples before split |
+| min_samples_leaf | Minimum samples in leaf |
+
+**Best Result**
+
+```
+max_depth = 3
+
+Accuracy = 81.01%
+```
+
+## 9. Random Forest
+
+Random Forest combines many Decision Trees using **Bagging** and **Majority Voting**.
+
+**Steps**
+
+1. Bootstrap Sampling
+2. Train Multiple Trees
+3. Random Feature Selection
+4. Majority Voting
+
+**Advantages**
+
+- Less Overfitting
+- Better Accuracy
+- Stable Predictions
+
+## 10. Train Random Forest
+
+```python
+rf=RandomForestClassifier(
+n_estimators=100,
+max_depth=5
+)
+```
+
+**Output**
+
+```
+Train Accuracy : 85.81%
+
+Test Accuracy : 78.77%
+
+CV Accuracy : 81.33%
+```
+
+## 11. Feature Importance
+
+Feature Importance identifies which features contribute most to predictions.
+
+```python
+importance_df=pd.DataFrame(...)
+```
+
+**Important Features**
+
+- IsFemale
+- Pclass
+- Age
+
+## 12. Model Comparison
+
+| Model | Test Accuracy | CV Accuracy |
+|---------|--------------|-------------|
+| Logistic Regression | 80.45% | 78.66% |
+| Decision Tree | **81.01%** | **81.47%** |
+| Random Forest | 78.77% | 81.33% |
+
+## 13. Decision Tree vs Random Forest
+
+| Decision Tree | Random Forest |
+|--------------|---------------|
+| Single Tree | Multiple Trees |
+| Faster | Slightly Slower |
+| High Variance | Low Variance |
+| Can Overfit | Less Overfitting |
+
+**Exercise 1 – Change `n_estimators`**
+
+**Task**
+
+Train the Random Forest model using **10, 50, and 150 trees**. Compare the test accuracy and training time.
+
+**Solution**
+
+```python
+import time
+
+estimators = [10, 50, 150]
+
+for n in estimators:
+
+    start = time.time()
+
+    rf_test = RandomForestClassifier(
+        n_estimators=n,
+        max_depth=5,
+        random_state=42
+    )
+
+    rf_test.fit(X_train, y_train)
+
+    end = time.time()
+
+    accuracy = accuracy_score(
+        y_test,
+        rf_test.predict(X_test)
+    )
+
+    print(
+        f"Trees={n}, Accuracy={accuracy:.4f}, Time={end-start:.3f}s"
+    )
+```
+
+**Output**
+
+| n_estimators | Test Accuracy | Training Time |
+|--------------|--------------|---------------|
+| 10 | 75.98% | 0.078 s |
+| 50 | 78.21% | 0.204 s |
+| 150 | 79.33% | 0.400 s |
+
+**Exercise 2 – Vary `min_samples_leaf`**
+
+**Task**
+
+Train a Decision Tree using:
+
+```
+max_depth = 10
+```
+
+and change **min_samples_leaf** from **1 to 50**.
+
+**Solution**
+
+```python
+leaves = [1, 5, 10, 20, 50]
+
+train_acc = []
+test_acc = []
+
+for leaf in leaves:
+
+    dt = DecisionTreeClassifier(
+        max_depth=10,
+        min_samples_leaf=leaf,
+        random_state=42
+    )
+
+    dt.fit(X_train, y_train)
+
+    train_acc.append(
+        accuracy_score(
+            y_train,
+            dt.predict(X_train)
+        )
+    )
+
+    test_acc.append(
+        accuracy_score(
+            y_test,
+            dt.predict(X_test)
+        )
+    )
+
+print("Leaf | Train | Test")
+
+for l, tr, te in zip(leaves, train_acc, test_acc):
+    print(l, tr, te)
+```
+
+**Output**
+
+| min_samples_leaf | Train Accuracy | Test Accuracy |
+|------------------|---------------|--------------|
+| 1 | 93.12% | 77.09% |
+| 5 | 87.64% | 77.65% |
+| 10 | 85.67% | 78.77% |
+| 20 | 83.57% | 79.33% |
+| 50 | 81.18% | 78.21% |
+
+**Exercise 3 – Permutation Feature Importance**
+
+**Task**
+
+Find the most important features using **Permutation Importance**.
+
+**Solution**
+
+```python
+from sklearn.inspection import permutation_importance
+
+result = permutation_importance(
+    rf,
+    X_test,
+    y_test,
+    n_repeats=10,
+    random_state=42
+)
+
+sorted_index = result.importances_mean.argsort()[::-1]
+
+for i in sorted_index:
+    print(
+        X.columns[i],
+        result.importances_mean[i]
+    )
+```
+
+**Output**
+
+```
+Top Features
+
+1. IsFemale
+2. Pclass
+3. Age
+```
+
+**Exercise 4 – Decision Surface Comparison**
+
+**Task**
+
+Plot the decision boundaries of a **Decision Tree** and a **Random Forest** using **Age** and **Fare**.
+
+**Solution**
+
+```python
+from matplotlib.colors import ListedColormap
+
+f1 = "Age"
+f2 = "Fare"
+
+X_2d = X_train[[f1, f2]].values
+y_2d = y_train.values
+
+dt = DecisionTreeClassifier(
+    max_depth=4,
+    random_state=42
+)
+
+rf = RandomForestClassifier(
+    n_estimators=50,
+    max_depth=4,
+    random_state=42
+)
+
+dt.fit(X_2d, y_2d)
+rf.fit(X_2d, y_2d)
+```
+
+**Output**
+
+Decision boundary plots are generated for both models.
+ 
+**AI/ML Applications**
+
+- Titanic Survival Prediction
+- Disease Prediction
+- Fraud Detection
+- Credit Risk Analysis
+- Customer Churn Prediction
+- Spam Detection
+- Recommendation Systems
+
+## DAY 19 OF TRAINING
+
+**Introduction to Clustering (Unsupervised Learning)**
+
+Day 19 introduced **Unsupervised Learning**, where the model discovers hidden patterns without using target labels. We studied the **K-Means Clustering** algorithm using the **Mall Customers Dataset** to group customers based on their purchasing behavior. We also learned Feature Scaling, Cluster Visualization, Customer Segmentation, and the Elbow Method for selecting the optimal number of clusters. :contentReference[oaicite:0]{index=0}
+
+**Learning Objectives:-**
+
+- Understand Unsupervised Learning
+- Learn Clustering
+- Understand K-Means Algorithm
+- Explore Mall Customers Dataset
+- Perform Feature Scaling
+- Build K-Means Model
+- Visualize Clusters
+- Interpret Customer Segments
+- Learn the Elbow Method
+
+## 1. Supervised vs Unsupervised Learning
+
+| Supervised Learning | Unsupervised Learning |
+|---------------------|----------------------|
+| Uses target labels | No target labels |
+| Predicts outputs | Finds hidden patterns |
+| Examples: Regression, Classification | Example: Clustering |
+
+## 2. Import Required Libraries
+
+```python
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+from sklearn.cluster import KMeans
+from sklearn.preprocessing import StandardScaler
+
+import warnings
+warnings.filterwarnings("ignore")
+```
+
+## 3. Load Mall Customers Dataset
+
+The dataset contains **200 customers** with the following attributes:
+
+- CustomerID
+- Gender
+- Age
+- Annual Income (k$)
+- Spending Score (1–100)
+
+```python
+df = pd.read_csv("Mall_Customers.csv")
+
+df.head()
+```
+
+**Output**
+
+```
+Dataset Shape
+
+200 Rows × 5 Columns
+```
+
+## 4. Exploratory Data Analysis (EDA)
+
+```python
+print(df.shape)
+
+df.info()
+
+df.describe()
+```
+
+**Dataset Summary**
+
+| Attribute | Value |
+|-----------|-------|
+| Rows | 200 |
+| Columns | 5 |
+| Missing Values | 0 |
+
+**Summary Statistics**
+
+| Feature | Mean |
+|---------|------|
+| Age | 38.85 |
+| Annual Income | 60.56 |
+| Spending Score | 50.20 |
+
+Since there are **no missing values**, the dataset is ready for clustering. :contentReference[oaicite:2]{index=2}
+
+## 5. Raw Data Visualization
+
+```python
+sns.scatterplot(
+    data=df,
+    x="Annual Income (k$)",
+    y="Spending Score (1-100)"
+)
+```
+
+**Observation**
+
+The scatter plot naturally shows groups of customers:
+
+- Low Income – Low Spending
+- Low Income – High Spending
+- Average Income – Average Spending
+- High Income – Low Spending
+- High Income – High Spending
+
+This indicates that **5 clusters** may be suitable. :contentReference[oaicite:3]{index=3}
+
+## 6. Feature Scaling
+
+K-Means uses **Euclidean Distance**, so features must be on the same scale.
+
+```python
+X = df[
+[
+"Annual Income (k$)",
+"Spending Score (1-100)"
+]
+]
+
+scaler = StandardScaler()
+
+X_scaled = scaler.fit_transform(X)
+```
+
+**Why Scaling?**
+
+- Prevents one feature from dominating.
+- Improves clustering accuracy.
+- Gives equal importance to all features. :contentReference[oaicite:4]{index=4}
+
+## 7. K-Means Clustering
+
+**Steps**
+
+1. Choose K
+2. Initialize Centroids
+3. Assign Data Points
+4. Update Centroids
+5. Repeat until convergence
+
+```python
+kmeans = KMeans(
+    n_clusters=5,
+    init="k-means++",
+    n_init=10,
+    random_state=42
+)
+
+kmeans.fit(X_scaled)
+
+labels = kmeans.labels_
+```
+
+**Output**
+
+```
+Model Training Completed Successfully
+```
+
+## 8. Visualizing Clusters
+
+```python
+df["Cluster"] = labels
+
+sns.scatterplot(
+data=df,
+x="Annual Income (k$)",
+y="Spending Score (1-100)",
+hue="Cluster"
+)
+```
+
+**Cluster Centers**
+
+| Cluster | Income | Spending Score |
+|----------|---------|----------------|
+| 1 | 55.30 | 49.52 |
+| 2 | 86.54 | 82.13 |
+| 3 | 25.73 | 79.36 |
+| 4 | 88.20 | 17.11 |
+| 5 | 26.30 | 20.91 |
+
+## 9. Customer Segment Interpretation
+
+| Cluster | Description |
+|----------|-------------|
+| High Income – High Spending | Premium Customers |
+| High Income – Low Spending | Conservative Customers |
+| Average Income – Average Spending | Regular Customers |
+| Low Income – High Spending | Impulsive Buyers |
+| Low Income – Low Spending | Budget Customers |
+
+These customer groups help businesses design targeted marketing strategies. :contentReference[oaicite:5]{index=5}
+
+## 10. Elbow Method
+
+The Elbow Method helps determine the **optimal number of clusters (K)** by comparing inertia values.
+
+```python
+inertias=[]
+
+for k in range(1,11):
+
+    km=KMeans(
+        n_clusters=k,
+        random_state=42
+    )
+
+    km.fit(X_scaled)
+
+    inertias.append(km.inertia_)
+```
+
+**Observation**
+
+The elbow appears at **K = 5**, indicating that **5 clusters** are the optimal choice. :contentReference[oaicite:6]{index=6}
+
+**Exercise 1 – Change Number of Clusters**
+
+**Task**
+
+Run K-Means for **K = 3, 4, 5, 6**.
+
+**Solution**
+
+```python
+for k in [3,4,5,6]:
+
+    model = KMeans(
+        n_clusters=k,
+        random_state=42
+    )
+
+    model.fit(X_scaled)
+
+    print(
+        "K =",k,
+        "Inertia =",model.inertia_
+    )
+```
+
+**Exercise 2 – Use Different Features**
+
+**Task**
+
+Cluster customers using **Age** and **Annual Income**.
+
+**Solution**
+
+```python
+X2=df[
+[
+"Age",
+"Annual Income (k$)"
+]
+]
+
+X2=scaler.fit_transform(X2)
+
+model=KMeans(
+n_clusters=5,
+random_state=42
+)
+
+model.fit(X2)
+```
+
+**Exercise 3 – Visualize New Clusters**
+
+**Solution**
+
+```python
+plt.figure(figsize=(8,6))
+
+sns.scatterplot(
+x=df["Age"],
+y=df["Annual Income (k$)"],
+hue=model.labels_,
+palette="Set1"
+)
+
+plt.show()
+```
+
+**Exercise 4 – Compare Different Values of K**
+
+**Solution**
+
+```python
+scores=[]
+
+for k in range(2,8):
+
+    km=KMeans(
+        n_clusters=k,
+        random_state=42
+    )
+
+    km.fit(X_scaled)
+
+    scores.append(km.inertia_)
+
+print(scores)
+```
+
+**AI/ML Applications**
+
+- Customer Segmentation
+- Product Recommendation
+- Market Basket Analysis
+- Fraud Detection
+- Image Segmentation
+- Medical Data Analysis
+- Social Network Analysis
+
