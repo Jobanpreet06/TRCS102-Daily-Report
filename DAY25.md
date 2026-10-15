@@ -1,4 +1,4 @@
-## DAY 19 OF TRAINING
+## DAY 25 OF TRAINING
 
 **Introduction to Clustering & K-Means**
 
