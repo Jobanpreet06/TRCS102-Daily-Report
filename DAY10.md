@@ -359,6 +359,3 @@ plt.show()
 ```
 
 **Output:** The histogram shows the frequency distribution, while the box plot summarizes the spread of the same data.
-
-
-## ⭐ Day 11 Completed – Statistical Data Visualization using Seaborn
