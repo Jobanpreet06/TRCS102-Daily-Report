@@ -408,6 +408,3 @@ Failed: [35 48 42]
 - **Dataset Preparation:** Separating records based on conditions.
 - **Data Analysis:** Selecting passed students, positive values, or records in a range.
 - **Preprocessing:** Replacing unwanted values before training a model.
-
-
-## ⭐ Day 8 Completed – Boolean Masking, Conditional Filtering & Fancy Indexing
