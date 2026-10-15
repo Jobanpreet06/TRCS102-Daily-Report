@@ -355,7 +355,7 @@ Original: [10 20 30 40 50]
 Safe Copy: [ 20 999  40]
 ```
 
-## 11. AI/ML Applications
+**AI/ML Applications**
 
 - **Data Preprocessing:** Selecting portions of datasets.
 - **Memory Optimization:** Using views to avoid unnecessary data duplication.
@@ -363,6 +363,3 @@ Safe Copy: [ 20 999  40]
 - **Safe Data Manipulation:** Using copies to avoid accidental changes.
 - **Model Training:** Preparing arrays for training and testing.
 - **Numerical Computing:** Efficiently processing large arrays.
-
-
-## ⭐ Day 7 Completed – NumPy Views, Copies and Array Slicing
