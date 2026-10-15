@@ -1,4 +1,4 @@
-## DAY 15 OF TRAINING
+## DAY 18 OF TRAINING
 
 **Polynomial Regression – Teaching Our Robot to Curve!**
 
