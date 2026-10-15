@@ -1,28 +1,30 @@
 ## DAY 19 OF TRAINING
 
-**Introduction to Clustering (Unsupervised Learning)**
+**Introduction to Clustering & K-Means**
 
-Day 19 introduced **Unsupervised Learning**, where the model discovers hidden patterns without using target labels. We studied the **K-Means Clustering** algorithm using the **Mall Customers Dataset** to group customers based on their purchasing behavior. We also learned Feature Scaling, Cluster Visualization, Customer Segmentation, and the Elbow Method for selecting the optimal number of clusters. :contentReference[oaicite:0]{index=0}
+**Project:** Customer Segmentation for Retail — Mall Customers Dataset
+
+Day 19 introduced **Unsupervised Learning**, where a model discovers patterns and groups in data without predefined labels. We explored **K-Means Clustering** using the Mall Customers dataset to group customers according to annual income and spending score.
 
 **Learning Objectives:-**
 
-- Understand Unsupervised Learning
-- Learn Clustering
-- Understand K-Means Algorithm
-- Explore Mall Customers Dataset
-- Perform Feature Scaling
-- Build K-Means Model
-- Visualize Clusters
-- Interpret Customer Segments
-- Learn the Elbow Method
+- Understand supervised and unsupervised learning.
+- Learn the concept of clustering.
+- Explore the Mall Customers dataset.
+- Perform exploratory data analysis (EDA).
+- Understand feature scaling.
+- Implement K-Means clustering.
+- Visualize customer clusters.
 
 ## 1. Supervised vs Unsupervised Learning
 
 | Supervised Learning | Unsupervised Learning |
-|---------------------|----------------------|
-| Uses target labels | No target labels |
-| Predicts outputs | Finds hidden patterns |
+|---|---|
+| Uses labelled data | Uses unlabelled data |
+| Predicts known target values | Finds hidden patterns |
 | Examples: Regression, Classification | Example: Clustering |
+
+**Example:** Just as coins can be grouped by size, color, and weight without knowing their country, clustering groups similar data points together.
 
 ## 2. Import Required Libraries
 
@@ -39,112 +41,121 @@ import warnings
 warnings.filterwarnings("ignore")
 ```
 
-## 3. Load Mall Customers Dataset
+## 3. Load the Mall Customers Dataset
 
-The dataset contains **200 customers** with the following attributes:
+The dataset contains 200 customer records and five columns:
 
-- CustomerID
-- Gender
-- Age
-- Annual Income (k$)
-- Spending Score (1–100)
+- `CustomerID`
+- `Gender`
+- `Age`
+- `Annual Income (k$)`
+- `Spending Score (1-100)`
 
 ```python
 df = pd.read_csv("Mall_Customers.csv")
 
-df.head()
+print(df.shape)
+print(df.head())
 ```
 
-**Output**
+**Expected Output**
 
-```
-Dataset Shape
-
-200 Rows × 5 Columns
+```text
+(200, 5)
 ```
 
 ## 4. Exploratory Data Analysis (EDA)
 
+EDA helps us understand the dataset before applying a Machine Learning algorithm.
+
 ```python
-print(df.shape)
+print("Dataset Shape:", df.shape)
 
 df.info()
 
-df.describe()
+print(df.describe())
+
+print(df.isnull().sum())
 ```
 
 **Dataset Summary**
 
-| Attribute | Value |
-|-----------|-------|
-| Rows | 200 |
-| Columns | 5 |
-| Missing Values | 0 |
-
-**Summary Statistics**
-
 | Feature | Mean |
-|---------|------|
+|---|---:|
 | Age | 38.85 |
 | Annual Income | 60.56 |
 | Spending Score | 50.20 |
 
-Since there are **no missing values**, the dataset is ready for clustering. :contentReference[oaicite:2]{index=2}
+- Total customers: 200
+- Total columns: 5
+- Missing values: 0 in every column
 
-## 5. Raw Data Visualization
+## 5. Visualize the Raw Data
 
 ```python
+plt.figure(figsize=(8, 5))
+
 sns.scatterplot(
     data=df,
     x="Annual Income (k$)",
     y="Spending Score (1-100)"
 )
+
+plt.title("Annual Income vs Spending Score")
+plt.show()
 ```
 
 **Observation**
 
-The scatter plot naturally shows groups of customers:
+The scatter plot suggests several customer groups:
 
-- Low Income – Low Spending
-- Low Income – High Spending
-- Average Income – Average Spending
-- High Income – Low Spending
-- High Income – High Spending
+- Low income, low spending
+- Low income, high spending
+- Average income, average spending
+- High income, low spending
+- High income, high spending
 
-This indicates that **5 clusters** may be suitable. :contentReference[oaicite:3]{index=3}
+These patterns suggest that five clusters may be useful.
 
 ## 6. Feature Scaling
 
-K-Means uses **Euclidean Distance**, so features must be on the same scale.
+K-Means uses Euclidean distance to group similar points. If features have different scales, a feature with a larger range can dominate the distance calculation.
+
+**StandardScaler**
+
+StandardScaler transforms features to have approximately a mean of 0 and a standard deviation of 1.
 
 ```python
 X = df[
-[
-"Annual Income (k$)",
-"Spending Score (1-100)"
-]
+    ["Annual Income (k$)", "Spending Score (1-100)"]
 ]
 
 scaler = StandardScaler()
 
 X_scaled = scaler.fit_transform(X)
+
+print(X_scaled[:5])
 ```
 
-**Why Scaling?**
+**Why Is Scaling Important?**
 
 - Prevents one feature from dominating.
-- Improves clustering accuracy.
-- Gives equal importance to all features. :contentReference[oaicite:4]{index=4}
+- Makes distance calculations fairer.
+- Helps K-Means create meaningful clusters.
 
-## 7. K-Means Clustering
+## 7. How K-Means Works
 
-**Steps**
+K-Means follows these steps:
 
-1. Choose K
-2. Initialize Centroids
-3. Assign Data Points
-4. Update Centroids
-5. Repeat until convergence
+1. **Choose K:** Select the number of clusters.
+2. **Initialize Centroids:** Select starting cluster centers.
+3. **Assign Points:** Assign each point to its nearest centroid.
+4. **Update Centroids:** Calculate new cluster centers.
+5. **Repeat:** Continue until the centroids stop changing significantly.
+
+## 8. Train the K-Means Model
+
+We use `K = 5` to create five customer groups.
 
 ```python
 kmeans = KMeans(
@@ -157,168 +168,60 @@ kmeans = KMeans(
 kmeans.fit(X_scaled)
 
 labels = kmeans.labels_
+
+print("Model training completed!")
+print("First 10 cluster labels:", labels[:10])
 ```
 
-**Output**
+**Expected Output**
 
-```
-Model Training Completed Successfully
+```text
+Model training completed!
+First 10 cluster labels: [4 2 4 2 4 2 4 2 4 2]
 ```
 
-## 8. Visualizing Clusters
+*Note: Cluster labels are identifiers; their numerical order has no special meaning.*
+
+## 9. Visualize the Clusters
 
 ```python
 df["Cluster"] = labels
 
-sns.scatterplot(
-data=df,
-x="Annual Income (k$)",
-y="Spending Score (1-100)",
-hue="Cluster"
+centroids = scaler.inverse_transform(
+    kmeans.cluster_centers_
 )
+
+plt.figure(figsize=(10, 6))
+
+sns.scatterplot(
+    data=df,
+    x="Annual Income (k$)",
+    y="Spending Score (1-100)",
+    hue="Cluster",
+    palette="Set1",
+    s=70
+)
+
+plt.scatter(
+    centroids[:, 0],
+    centroids[:, 1],
+    color="black",
+    marker="*",
+    s=300,
+    label="Centroids"
+)
+
+plt.title("Mall Customer Segmentation (K=5)")
+plt.legend()
+plt.show()
 ```
 
 **Cluster Centers**
 
-| Cluster | Income | Spending Score |
-|----------|---------|----------------|
+| Cluster | Annual Income (k$) | Spending Score |
+|---|---:|---:|
 | 1 | 55.30 | 49.52 |
 | 2 | 86.54 | 82.13 |
 | 3 | 25.73 | 79.36 |
 | 4 | 88.20 | 17.11 |
 | 5 | 26.30 | 20.91 |
-
-## 9. Customer Segment Interpretation
-
-| Cluster | Description |
-|----------|-------------|
-| High Income – High Spending | Premium Customers |
-| High Income – Low Spending | Conservative Customers |
-| Average Income – Average Spending | Regular Customers |
-| Low Income – High Spending | Impulsive Buyers |
-| Low Income – Low Spending | Budget Customers |
-
-These customer groups help businesses design targeted marketing strategies. :contentReference[oaicite:5]{index=5}
-
-## 10. Elbow Method
-
-The Elbow Method helps determine the **optimal number of clusters (K)** by comparing inertia values.
-
-```python
-inertias=[]
-
-for k in range(1,11):
-
-    km=KMeans(
-        n_clusters=k,
-        random_state=42
-    )
-
-    km.fit(X_scaled)
-
-    inertias.append(km.inertia_)
-```
-
-**Observation**
-
-The elbow appears at **K = 5**, indicating that **5 clusters** are the optimal choice. :contentReference[oaicite:6]{index=6}
-
-**Exercise 1 – Change Number of Clusters**
-
-**Task**
-
-Run K-Means for **K = 3, 4, 5, 6**.
-
-**Solution**
-
-```python
-for k in [3,4,5,6]:
-
-    model = KMeans(
-        n_clusters=k,
-        random_state=42
-    )
-
-    model.fit(X_scaled)
-
-    print(
-        "K =",k,
-        "Inertia =",model.inertia_
-    )
-```
-
-**Exercise 2 – Use Different Features**
-
-**Task**
-
-Cluster customers using **Age** and **Annual Income**.
-
-**Solution**
-
-```python
-X2=df[
-[
-"Age",
-"Annual Income (k$)"
-]
-]
-
-X2=scaler.fit_transform(X2)
-
-model=KMeans(
-n_clusters=5,
-random_state=42
-)
-
-model.fit(X2)
-```
-
-**Exercise 3 – Visualize New Clusters**
-
-**Solution**
-
-```python
-plt.figure(figsize=(8,6))
-
-sns.scatterplot(
-x=df["Age"],
-y=df["Annual Income (k$)"],
-hue=model.labels_,
-palette="Set1"
-)
-
-plt.show()
-```
-
-**Exercise 4 – Compare Different Values of K**
-
-**Solution**
-
-```python
-scores=[]
-
-for k in range(2,8):
-
-    km=KMeans(
-        n_clusters=k,
-        random_state=42
-    )
-
-    km.fit(X_scaled)
-
-    scores.append(km.inertia_)
-
-print(scores)
-```
-
-**AI/ML Applications**
-
-- Customer Segmentation
-- Product Recommendation
-- Market Basket Analysis
-- Fraud Detection
-- Image Segmentation
-- Medical Data Analysis
-- Social Network Analysis
-
-
