@@ -1,25 +1,29 @@
 ## DAY 10 OF TRAINING
 
-**Pandas Data Cleaning, Boolean Indexing & GroupBy**
+**Pandas Boolean Indexing & Data Filtering**
 
-Day 9 focused on **data preprocessing using Pandas**, including filtering datasets with Boolean Indexing, handling missing values, grouping data for analysis, and solving practical data-cleaning exercises commonly used in AI & Machine Learning.
+**Introduction**
+
+Day 10 focused on **Boolean Indexing and Data Filtering using Pandas**. Boolean Indexing helps us select rows from a dataset based on specific conditions. It is useful when we want to analyse only selected records instead of the complete dataset.
+
+In this session, I learned how to filter data using single and multiple conditions, create Boolean masks, and select specific columns from a DataFrame.
 
 **Learning Objectives:-**
 
-- Understand Boolean Indexing
-- Filter data using single and multiple conditions
-- Detect Missing Values
-- Handle missing data using `fillna()`
-- Remove missing values using `dropna()`
-- Perform GroupBy operations
-- Calculate Aggregate Statistics
-- Solve Data Cleaning Exercises
+- Understand Boolean Indexing in Pandas.
+- Filter rows using a single condition.
+- Apply multiple conditions using `&` and `|`.
+- Create and use Boolean masks.
+- Select specific columns from filtered data.
+- Solve practical data-filtering exercises.
 
-## 1. Boolean Indexing
+## 1. What Is Boolean Indexing?
 
-Boolean Indexing is used to filter rows that satisfy a given condition.
+Boolean Indexing is a technique used to select rows that satisfy a particular condition.
 
-**Example**
+For example, if we want to display customers whose income is greater than 60000, we can use Boolean Indexing.
+
+**Example: Filter Customers by Income**
 
 ```python
 high_income = df[df["Income"] > 60000]
@@ -27,17 +31,53 @@ high_income = df[df["Income"] > 60000]
 print(high_income)
 ```
 
-Returns all customers having income greater than **60000**.
+**Explanation:**
 
-**Multiple Conditions**
+- `df["Income"] > 60000` checks the income of each customer.
+- It returns `True` for customers whose income is greater than 60000 and `False` for others.
+- `df[...]` selects only the rows where the condition is `True`.
+
+## 2. Filtering Using Multiple Conditions
+
+We can combine multiple conditions to filter data more precisely.
+
+**Example: Age and Gender**
 
 ```python
-filtered = df[(df["Age"] >= 25) & (df["Gender"] == "F")]
+filtered = df[
+    (df["Age"] >= 25) & (df["Gender"] == "F")
+]
 
 print(filtered)
 ```
 
-**Using Boolean Mask**
+This displays customers who are at least 25 years old and have gender `"F"`.
+
+**Important operators:**
+
+| Operator | Meaning |
+|---|---|
+| `&` | AND — both conditions must be true |
+| `|` | OR — at least one condition must be true |
+| `~` | NOT — reverses a Boolean condition |
+
+Always place each condition inside parentheses when combining conditions in Pandas.
+
+**Example: Using OR**
+
+```python
+filtered = df[
+    (df["Age"] < 20) | (df["Income"] > 60000)
+]
+
+print(filtered)
+```
+
+This selects customers who are younger than 20 **or** have income greater than 60000.
+
+## 3. Using a Boolean Mask
+
+A Boolean mask stores the result of a condition as `True` or `False` values.
 
 ```python
 mask = df["Income"] > 60000
@@ -49,191 +89,82 @@ high_income = df[mask]
 print(high_income)
 ```
 
-## 2. Missing Values
+**Explanation:**
 
-Real-world datasets usually contain missing values that must be handled before training Machine Learning models.
+1. The condition checks each customer's income.
+2. The variable `mask` stores the Boolean results.
+3. `df[mask]` selects the rows where the mask is `True`.
 
-**Detect Missing Values**
+Using a separate mask makes filtering easier to understand and reuse.
 
-```python
-df.isnull().sum()
-```
+## 4. Selecting Specific Columns
 
-**Example Output**
+Sometimes, we need only a few columns from the filtered data.
 
-```text
-CustomerID    0
-Age           1
-Gender        1
-Income        1
-Purchased     0
-```
-
-**Fill Missing Values**
-
-Replace missing **Age** values with the column mean.
+For example, to display only the hours studied and grade of students who passed:
 
 ```python
-mean_age = df["Age"].mean()
-
-df["Age"] = df["Age"].fillna(mean_age)
-```
-
-Replace missing **Income** values.
-
-```python
-mean_income = df["Income"].mean()
-
-df["Income"] = df["Income"].fillna(mean_income)
-```
-
-**Drop Missing Values**
-
-Remove rows containing missing Gender values.
-
-```python
-df = df.dropna(subset=["Gender"])
-```
-
-**Verify Dataset**
-
-```python
-df.isnull().sum()
-```
-
-**Output**
-
-```text
-CustomerID    0
-Age           0
-Gender        0
-Income        0
-Purchased     0
-```
-
-## 3. GroupBy
-
-`groupby()` groups similar records together for analysis.
-
-**Average Income by Gender**
-
-```python
-df.groupby("Gender")["Income"].mean()
-```
-
-**Average Age by Gender**
-
-```python
-df.groupby("Gender")["Age"].mean()
-```
-
-**Multiple Columns**
-
-```python
-cols = ["Income","Age"]
-
-df.groupby("Gender")[cols].mean()
-```
-
-**Output**
-
-| Gender | Income | Age |
-|---------|--------:|----:|
-| F | 44666.67 | 26.27 |
-| M | 69875.00 | 39.00 |
-
-**Group by Purchased**
-
-```python
-df.groupby("Purchased")[cols].mean()
-```
-
-**Output**
-
-| Purchased | Income | Age |
-|------------|--------:|----:|
-| No | 42250 | 25.0 |
-| Yes | 73500 | 40.9 |
-
-## 4. Aggregate Functions
-
-Common aggregation functions used with GroupBy.
-
-| Function | Purpose |
-|----------|---------|
-| `mean()` | Average value |
-| `sum()` | Total |
-| `count()` | Number of records |
-| `max()` | Maximum value |
-| `min()` | Minimum value |
-| `std()` | Standard Deviation |
-
-**Exercise 1 – Dataset Inspection**
-
-```python
-eval_df = pd.read_csv("student.csv")
-
-print(eval_df.head())
-
-print(eval_df.info())
-
-print(eval_df.describe())
-```
-
-**Exercise 2 – Data Filtering**
-
-Display students who passed.
-
-```python
-passed = eval_df[eval_df["Passed"]=="Yes"]
+passed = eval_df[
+    eval_df["Passed"] == "Yes"
+][["HoursStudied", "Grade"]]
 
 print(passed)
 ```
 
-Display only selected columns.
+This first filters students who passed and then displays only the `HoursStudied` and `Grade` columns.
+
+**Exercise 1: Display Customers with Income Greater Than 50000**
 
 ```python
-passed = eval_df[eval_df["Passed"]=="Yes"][["HoursStudied","Grade"]]
+result = df[df["Income"] > 50000]
 
-print(passed)
+print(result)
 ```
 
-**Exercise 3 – Missing Value Handling**
+**Exercise 2: Display Customers Aged 25 or Above**
 
 ```python
-mean_hours = eval_df["HoursStudied"].mean()
+result = df[df["Age"] >= 25]
 
-clean_df = eval_df.copy()
-
-clean_df["HoursStudied"] = clean_df["HoursStudied"].fillna(mean_hours)
-
-clean_df = clean_df.dropna(subset=["Grade"])
-
-print(clean_df)
+print(result)
 ```
 
-**Exercise 4 – GroupBy Summary**
+**Exercise 3: Display Female Customers with Income Above 40000**
 
 ```python
-summary = clean_df.groupby("Passed")[["HoursStudied","Grade","Attendance"]].mean()
+result = df[
+    (df["Gender"] == "F") & (df["Income"] > 40000)
+]
 
-print(summary)
+print(result)
 ```
 
-**Output**
+**Exercise 4: Display Customers Who Are Younger Than 20 or Have Income Above 60000**
 
-| Passed | HoursStudied | Grade | Attendance |
-|---------|-------------:|------:|-----------:|
-| No | 6.75 | 53.50 | 88.00 |
-| Yes | 15.10 | 86.00 | 94.33 |
+```python
+result = df[
+    (df["Age"] < 20) | (df["Income"] > 60000)
+]
+
+print(result)
+```
+
+**Exercise 5: Display Students Who Passed with Selected Columns**
+
+```python
+passed = eval_df[eval_df["Passed"] == "Yes"]
+
+print(passed[["HoursStudied", "Grade"]])
+```
+
+**Note:** These exercises use the DataFrames `df` and `eval_df` introduced in the examples. Load the appropriate dataset before running them.
 
 **AI/ML Applications**
 
-- Data Cleaning
-- Feature Selection
-- Missing Value Treatment
-- Customer Data Analysis
-- Exploratory Data Analysis (EDA)
-- Dataset Preprocessing
-- Model Preparation
+Boolean Indexing and Data Filtering are useful in:
 
+- Selecting relevant customer records.
+- Filtering data during preprocessing.
+- Analysing customer behaviour.
+- Selecting records for Exploratory Data Analysis (EDA).
+- Preparing datasets before training machine learning models.
