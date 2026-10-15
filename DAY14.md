@@ -1,4 +1,4 @@
-## DAY 11 OF TRAINING
+## DAY 14 OF TRAINING
 
 **Data Visualization Hands-on Practice – Titanic Dataset**
 
