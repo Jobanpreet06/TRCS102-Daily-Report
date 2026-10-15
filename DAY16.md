@@ -1,4 +1,4 @@
-## DAY 13 OF TRAINING
+## DAY 16 OF TRAINING
 
 **Data Preprocessing for Machine Learning**
 
