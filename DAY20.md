@@ -1,4 +1,4 @@
-## DAY 17 OF TRAINING
+## DAY 20 OF TRAINING
 
 **Lasso Regression – L1 Regularization and Feature Selection**
 
