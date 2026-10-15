@@ -1,4 +1,4 @@
-## DAY 20 OF TRAINING
+## DAY 26 OF TRAINING
 
 **Customer Segmentation & Elbow Method**
 
