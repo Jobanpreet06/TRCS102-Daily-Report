@@ -1,4 +1,4 @@
-## DAY 11 OF TRAINING
+## DAY 13 OF TRAINING
 
 **Statistical Data Visualization using Seaborn**
 
