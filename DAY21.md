@@ -1,4 +1,4 @@
-## DAY 17 OF TRAINING
+## DAY 21 OF TRAINING
 
 **Binary Classification & Logistic Regression**
 
