@@ -1,4 +1,4 @@
-## DAY 26 OF TRAINING
+## DAY 27 OF TRAINING
 
 **Customer Churn Prediction – Dataset Loading & Exploratory Data Analysis (EDA)**
 
