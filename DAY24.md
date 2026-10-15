@@ -1,4 +1,4 @@
-## DAY 19 OF TRAINING
+## DAY 24 OF TRAINING
 
 **Random Forests – Ensemble Learning and Model Comparison**
 
