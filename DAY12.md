@@ -1,4 +1,4 @@
-## DAY 10 OF TRAINING
+## DAY 12 OF TRAINING
 
 **Data Visualization Basics using Matplotlib**
 
