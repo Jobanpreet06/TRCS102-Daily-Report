@@ -1,4 +1,4 @@
-## DAY 8 OF TRAINING
+## DAY 9 OF TRAINING
 
 **Pandas Basics – Series, DataFrames & Data Exploration**
 
