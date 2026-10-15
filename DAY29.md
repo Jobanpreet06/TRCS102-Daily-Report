@@ -1,4 +1,4 @@
-## DAY 26 OF TRAINING
+## DAY 29 OF TRAINING
 
 **Customer Churn Prediction – Model Training & Performance Evaluation**
 
