@@ -1,4 +1,4 @@
-## DAY 9 OF TRAINING
+## DAY 10 OF TRAINING
 
 **Pandas Data Cleaning, Boolean Indexing & GroupBy**
 
