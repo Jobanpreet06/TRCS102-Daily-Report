@@ -1,4 +1,4 @@
-## DAY 12 OF TRAINING
+## DAY 15 OF TRAINING
 
 **Exploratory Data Analysis (EDA) on House Price Dataset**
 
