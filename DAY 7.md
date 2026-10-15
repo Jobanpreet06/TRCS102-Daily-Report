@@ -1,41 +1,62 @@
 ## DAY 7 OF TRAINING
 
-**Advanced NumPy – Copying, Views, Boolean Masking & Array Operations**
+**Advanced NumPy – Views, Copies and Array Slicing**
 
-Day 7 focused on advanced **NumPy array operations**, including shallow vs deep copying, array views, boolean masking, advanced indexing, slicing, and conditional filtering. These concepts are essential for efficient data preprocessing and manipulation in AI & Machine Learning.
+Day 7 focused on advanced NumPy operations, including views, copies, shallow vs deep copying, and array slicing. These concepts help us understand how NumPy handles memory and how to modify arrays safely. They are useful for efficient data manipulation and preprocessing in AI and Machine Learning.
 
 **Learning Objectives:-**
 
-- Understand NumPy Views and Copies
-- Learn Shallow Copy vs Deep Copy
-- Perform Advanced Indexing & Slicing
-- Apply Boolean Masking
-- Filter Arrays Efficiently
-- Modify Arrays Safely
-- Solve Practical NumPy Exercises
+- Understand NumPy views and copies.
+- Learn the difference between views and independent copies.
+- Perform array slicing and step slicing.
+- Understand how slicing affects the original array.
+- Create safe copies of arrays and slices.
+- Check whether arrays share memory.
+- Solve practical NumPy exercises.
 
-## 1. Copying Arrays
+## 1. Introduction to NumPy
 
-NumPy provides two ways to copy arrays:
+**NumPy** is a Python library used to work with numerical data and multidimensional arrays. It provides fast operations for mathematical calculations and data manipulation.
 
-| Copy Type | Description |
-|------------|-------------|
-| Shallow Copy | Shares the same memory with the original array |
-| Deep Copy | Creates a completely new array |
+```python
+import numpy as np
 
-## 2. Shallow Copy (View)
+arr = np.array([10, 20, 30, 40])
 
-A **Shallow Copy** creates another reference to the same data. Any modification in one array affects the other.
+print(arr)
+```
+
+**Output**
+
+```text
+[10 20 30 40]
+```
+
+## 2. Views and Copies
+
+NumPy provides different ways to create another array from existing data.
+
+| Feature | View | Copy |
+|---|---|---|
+| Memory | Shares data with original array | Has independent data |
+| Changes to elements | Can affect the original | Do not affect the original |
+| Memory usage | Usually lower | Usually higher |
+| Use | Efficient data access | Safe, independent modification |
+
+**Important:** In NumPy, `arr.view()` creates a view that shares the same underlying data. The `.copy()` method creates an independent copy.
+
+## 3. View (Shallow Copy)
+
+A **view** is another way to access the same underlying array data. Changes to the elements through the view can affect the original array.
 
 **Example**
 
 ```python
 import numpy as np
 
-arr = np.array([10,20,30,40])
+arr = np.array([10, 20, 30, 40])
 
 view = arr.view()
-
 view[0] = 100
 
 print("Original:", arr)
@@ -49,64 +70,94 @@ Original: [100  20  30  40]
 View: [100  20  30  40]
 ```
 
-**Memory Check**
+Here, changing the first element through `view` also changes the original array.
+
+**Checking Memory Sharing**
 
 ```python
-print(arr.base)
+print(np.shares_memory(arr, view))
+```
 
+**Output**
+
+```text
+True
+```
+
+`np.shares_memory()` checks whether two arrays share memory.
+
+You can also check the `base` attribute:
+
+```python
 print(view.base)
 ```
 
-If `base` is not `None`, both arrays share the same memory.
+For a view created directly from `arr`, this generally refers to the original array.
 
-## 3. Deep Copy
+## 4. Deep Copy Using `.copy()`
 
-A **Deep Copy** creates a completely independent array.
-
-Changes made to the copied array do not affect the original.
+A **copy** creates an independent array. Changes to the copied array do not affect the original array.
 
 **Example**
 
 ```python
-copy_arr = arr.copy()
+import numpy as np
 
+arr = np.array([10, 20, 30, 40])
+
+copy_arr = arr.copy()
 copy_arr[1] = 500
 
 print("Original:", arr)
-
 print("Copy:", copy_arr)
 ```
 
 **Output**
 
 ```text
-Original: [100 20 30 40]
-
-Copy: [100 500 30 40]
+Original: [10 20 30 40]
+Copy: [ 10 500  30  40]
 ```
 
-**Comparison**
+**Memory Check**
 
-| Feature | View | Copy |
-|----------|------|------|
-| Shares Memory | ✅ | ❌ |
-| Original Changes | Yes | No |
-| Faster | ✅ | ❌ |
-| Safer | ❌ | ✅ |
+```python
+print(np.shares_memory(arr, copy_arr))
+```
 
-## 4. Array Slicing
+**Output**
 
-Slicing extracts a portion of an array.
+```text
+False
+```
+
+The two arrays do not share their element data.
+
+**Important point:** For ordinary NumPy arrays, `.copy()` makes a copy of the array data. For arrays containing Python objects, the contained objects themselves are not recursively copied.
+
+## 5. Array Slicing
+
+**Array slicing** is used to select a portion of an array.
+
+**Syntax**
+
+```python
+array[start:stop:step]
+```
+
+- `start`: Index from which selection begins.
+- `stop`: Index where selection ends, but that index is not included.
+- `step`: Number of positions to skip between selected elements.
 
 **Example**
 
 ```python
-arr = np.arange(1,11)
+import numpy as np
+
+arr = np.arange(1, 11)
 
 print(arr[2:7])
-
 print(arr[:5])
-
 print(arr[5:])
 ```
 
@@ -114,17 +165,22 @@ print(arr[5:])
 
 ```text
 [3 4 5 6 7]
-
 [1 2 3 4 5]
-
-[6 7 8 9 10]
+[ 6  7  8  9 10]
 ```
 
-**Step Slicing**
+## 6. Step Slicing
+
+Step slicing selects elements at regular intervals.
+
+**Example**
 
 ```python
-print(arr[::2])
+import numpy as np
 
+arr = np.arange(1, 11)
+
+print(arr[::2])
 print(arr[::-1])
 ```
 
@@ -132,259 +188,104 @@ print(arr[::-1])
 
 ```text
 [1 3 5 7 9]
-
-[10 9 8 7 6 5 4 3 2 1]
+[10  9  8  7  6  5  4  3  2  1]
 ```
 
-## 5. Views from Slicing
+- `arr[::2]` selects every second element.
+- `arr[::-1]` reverses the array.
 
-Array slices are **views**, not copies.
+## 7. Views Created Through Slicing
 
-```python
-arr = np.array([10,20,30,40,50])
-
-slice_arr = arr[1:4]
-
-slice_arr[0] = 999
-
-print(arr)
-
-print(slice_arr)
-```
-
-**Output**
-
-```text
-[10 999 30 40 50]
-
-[999 30 40]
-```
-
-## 6. Safe Copy of Slice
-
-To prevent changes in the original array, use `.copy()`.
-
-```python
-safe_slice = arr[1:4].copy()
-
-safe_slice[0] = 111
-
-print(arr)
-
-print(safe_slice)
-```
-
-**Output**
-
-```text
-Original: [10 999 30 40 50]
-
-Copy: [111 30 40]
-```
-
-## 7. Boolean Masking
-
-Boolean Masking filters data based on conditions.
-
-**Example**
-
-```python
-arr1 = np.arange(0,21)
-
-mask = arr1 % 2 == 0
-
-print(mask)
-```
-
-**Output**
-
-```text
-[ True False True False True False True False True False
- True False True False True False True False True False True]
-```
-
-**Extract Even Numbers**
-
-```python
-even_numbers = arr1[arr1 % 2 == 0]
-
-print(even_numbers)
-```
-
-**Output**
-
-```text
-[ 0  2  4  6  8 10 12 14 16 18 20]
-```
-
-**AI/ML Applications**
-
-- Data Cleaning
-- Feature Selection
-- Removing Outliers
-- Filtering Missing Values
-- Dataset Preparation
-- Memory Optimization using Views
-
-## 8. Boolean Indexing with Conditions
-
-Boolean indexing allows selecting elements that satisfy a specific condition.
+Basic slicing in NumPy usually creates a view instead of a copy. Therefore, changing an element of a sliced array can change the original array.
 
 **Example**
 
 ```python
 import numpy as np
 
-marks = np.array([45, 82, 91, 33, 67, 58, 95])
+arr = np.array([10, 20, 30, 40, 50])
 
-passed = marks[marks >= 50]
+slice_arr = arr[1:4]
+slice_arr[0] = 999
 
-print(passed)
+print("Original:", arr)
+print("Slice:", slice_arr)
 ```
 
 **Output**
 
 ```text
-[82 91 67 58 95]
+Original: [ 10 999  30  40  50]
+Slice: [999  30  40]
 ```
 
-**Multiple Conditions**
+The original array changes because the slice shares its data.
 
-Use logical operators (`&`, `|`) to apply multiple conditions.
+## 8. Creating a Safe Copy of a Slice
 
-```python
-numbers = np.arange(1,21)
-
-filtered = numbers[(numbers >= 5) & (numbers <= 15)]
-
-print(filtered)
-```
-
-**Output**
-
-```text
-[ 5  6  7  8  9 10 11 12 13 14 15]
-```
-
-## 9. Fancy Indexing
-
-Fancy indexing allows selecting multiple elements using index arrays.
+If you want to modify a slice without changing the original array, use `.copy()`.
 
 **Example**
 
 ```python
-arr = np.array([10,20,30,40,50,60])
+import numpy as np
 
-print(arr[[0,2,5]])
+arr = np.array([10, 20, 30, 40, 50])
+
+safe_slice = arr[1:4].copy()
+safe_slice[0] = 111
+
+print("Original:", arr)
+print("Safe Copy:", safe_slice)
 ```
 
 **Output**
 
 ```text
-[10 30 60]
+Original: [10 20 30 40 50]
+Safe Copy: [111  30  40]
 ```
 
-**Reordering Elements**
+The original array remains unchanged.
+
+**Coding Exercises**
+
+**Exercise 1 – View Modification**
+
+**Task:** Create a view of an array and change its first element.
 
 ```python
-arr = np.array([100,200,300,400])
+import numpy as np
 
-new_arr = arr[[3,2,1,0]]
+arr = np.array([1, 2, 3, 4])
 
-print(new_arr)
+view = arr.view()
+view[0] = 100
+
+print("Original:", arr)
+print("View:", view)
 ```
 
 **Output**
 
 ```text
-[400 300 200 100]
+Original: [100   2   3   4]
+View: [100   2   3   4]
 ```
 
-## 10. Modifying Elements Using Boolean Masking
+**Exercise 2 – Verify a Copy**
 
-Boolean masks can also modify array values.
-
-**Example**
+**Task:** Change a copied array and check whether the original changes.
 
 ```python
-arr = np.array([5,12,18,25,7,30])
+import numpy as np
 
-arr[arr < 10] = 0
-
-print(arr)
-```
-
-**Output**
-
-```text
-[ 0 12 18 25  0 30]
-```
-
-**Practical Example – Student Marks**
-
-```python
-marks = np.array([55,42,88,76,34,91,67])
-
-passed_students = marks[marks >= 50]
-
-failed_students = marks[marks < 50]
-
-print("Passed:", passed_students)
-
-print("Failed:", failed_students)
-```
-
-**Output**
-
-```text
-Passed: [55 88 76 91 67]
-
-Failed: [42 34]
-```
-
-**Practical Example – Positive Numbers**
-
-```python
-numbers = np.array([-5,8,-2,14,0,-9,20])
-
-positive = numbers[numbers > 0]
-
-print(positive)
-```
-
-**Output**
-
-```text
-[ 8 14 20]
-```
-
-**Exercise 1 – Odd Number Filter**
-
-```python
-arr = np.arange(1,21)
-
-odd = arr[arr % 2 != 0]
-
-print(odd)
-```
-
-**Output**
-
-```text
-[ 1  3  5  7  9 11 13 15 17 19]
-```
-
-**Exercise 2 – Deep Copy Verification**
-
-```python
-arr = np.array([1,2,3,4])
+arr = np.array([1, 2, 3, 4])
 
 copy_arr = arr.copy()
-
 copy_arr[0] = 100
 
 print("Original:", arr)
-
 print("Copy:", copy_arr)
 ```
 
@@ -392,37 +293,58 @@ print("Copy:", copy_arr)
 
 ```text
 Original: [1 2 3 4]
-
 Copy: [100   2   3   4]
 ```
 
-**Exercise 3 – Boolean Mask**
+**Exercise 3 – Array Slicing**
+
+**Task:** Extract the elements from index 2 to index 6, excluding index 6.
 
 ```python
-arr = np.arange(0,31)
+import numpy as np
 
-mask = arr > 15
+arr = np.arange(1, 11)
 
-print(arr[mask])
+print(arr[2:6])
 ```
 
 **Output**
 
 ```text
-[16 17 18 19 20 21 22 23 24 25 26 27 28 29 30]
+[3 4 5 6]
 ```
 
-**Exercise 4 – Safe Slice Copy**
+**Exercise 4 – Reverse an Array**
+
+**Task:** Reverse the given array using slicing.
 
 ```python
-arr = np.array([10,20,30,40,50])
+import numpy as np
+
+arr = np.array([10, 20, 30, 40, 50])
+
+print(arr[::-1])
+```
+
+**Output**
+
+```text
+[50 40 30 20 10]
+```
+
+**Exercise 5 – Safe Slice Copy**
+
+**Task:** Modify a slice without changing the original array.
+
+```python
+import numpy as np
+
+arr = np.array([10, 20, 30, 40, 50])
 
 safe = arr[1:4].copy()
-
 safe[1] = 999
 
 print("Original:", arr)
-
 print("Safe Copy:", safe)
 ```
 
@@ -430,16 +352,17 @@ print("Safe Copy:", safe)
 
 ```text
 Original: [10 20 30 40 50]
-
 Safe Copy: [ 20 999  40]
 ```
 
-**AI/ML Applications**
+## 11. AI/ML Applications
 
-- Data preprocessing using Boolean Masking
-- Feature selection from datasets
-- Removing invalid records
-- Creating training and testing subsets
-- Memory-efficient processing using Views
-- Safe dataset manipulation using Copies
+- **Data Preprocessing:** Selecting portions of datasets.
+- **Memory Optimization:** Using views to avoid unnecessary data duplication.
+- **Feature Preparation:** Extracting selected columns or array sections.
+- **Safe Data Manipulation:** Using copies to avoid accidental changes.
+- **Model Training:** Preparing arrays for training and testing.
+- **Numerical Computing:** Efficiently processing large arrays.
 
+
+## ⭐ Day 7 Completed – NumPy Views, Copies and Array Slicing
