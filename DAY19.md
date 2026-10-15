@@ -1,4 +1,4 @@
-## DAY 16 OF TRAINING
+## DAY 19 OF TRAINING
 
 **Ridge Regression – L2 Regularization**
 
