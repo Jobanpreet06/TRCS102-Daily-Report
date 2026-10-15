@@ -1,4 +1,4 @@
-## DAY 14 OF TRAINING
+## DAY 17 OF TRAINING
 
 **Linear Regression – Building Our First House Price Prediction Model**
 
